@@ -6,7 +6,10 @@
   "scripts": {
     "start": "node build/index.js",
     "watch": "tsc -p tsconfig.json -w",
+    "prebuild": "rimraf dist",
     "build": "tsc -p tsconfig.json",
+    "postbuild": "npm run package",
+    "package": "mkdir dist&cp -r assets/ dist/&cp -r build/ dist/",
     "test": "mocha -r ts-node/register \"tests/**/*.spec.ts\""
   },
   "author": "",
