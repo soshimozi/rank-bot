@@ -24,6 +24,8 @@ phases:
     commands:
       - echo Copying assets to distribution folder
       - cp -r assets/ dist/
+      - cp appspec.yml dist/
+      - cp -r scripts/ dist/
 
 artifacts:
   files:
