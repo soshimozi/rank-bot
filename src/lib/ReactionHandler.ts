@@ -18,6 +18,7 @@ export const ReactionHandler = async function (err: unknown,
         }
 
         await LevelManager.giveGuildUserExp(messageReaction.message.member, messageReaction.message);
+        
         await UserStatManager.addUserReaction(messageReaction.message.author, messageReaction.message.guild, messageReaction.count || 1);
     }
 
