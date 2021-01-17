@@ -8,18 +8,18 @@ phases:
       - curl -sL https://deb.nodesource.com/setup_14.x | bash -
       - apt-get install -y nodejs
 
-    pre_build:
-      commands:
-        # install dependencies
-        - echo Installing dependencies...
-        - npm install
+  pre_build:
+    commands:
+      # install dependencies
+      - echo Installing dependencies...
+      - npm install
 
-    build:
-      commands:
-        # test
-        # build
-        - echo Building with NPM
-        - npm run build
+  build:
+    commands:
+      # test
+      # build
+      - echo Building with NPM
+      - npm run build
 
 artifacts:
   files:
