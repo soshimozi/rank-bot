@@ -20,6 +20,10 @@ phases:
       # build
       - echo Building with NPM
       - npm run build
+  post_build:
+    commands:
+      - echo Copying assets to distribution folder
+      - cp -r assets/ dist/
 
 artifacts:
   files:
