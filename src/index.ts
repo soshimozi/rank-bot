@@ -34,6 +34,7 @@ const main = async() => {
     }
 
     try {
+        console.log('bot logging in and starting ...');
         await bot.listen();
         console.info('Bot has started');
     }
