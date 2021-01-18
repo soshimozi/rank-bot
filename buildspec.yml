@@ -27,7 +27,8 @@ phases:
       - cp package.json dist/
       - cp appspec.yml dist/
       - cp -r scripts/ dist/
-      - cp .env dist/
+      - echo "PREFIX=!" > .env
+      - echo "DATABASENAME=/data/rankbot-database" >> .env
 
 artifacts:
   files:
