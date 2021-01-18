@@ -16,7 +16,6 @@ export default class Bot {
 
     public async listen(): Promise<string> {
 
-        
         this.client.on('message', async (message:Message) => await CommandHandler(null, this.client, message));
         this.client.on('messageUpdate', async(message:Message, oldMessage: Message) => await CommandHandler(null, this.client, message, oldMessage));
 
@@ -33,10 +32,14 @@ export default class Bot {
             await this.client.user.setActivity(`The Best Bot In the World`)
         });
 
+        console.log('getting secret');
         let secret = await this.getToken();
 
         let parsed = JSON.parse(secret);
-        return this.client.login(parsed.token/*process.env.TOKEN*/);
+
+        console.log('token aquired: ', parsed.token);
+
+        return await this.client.login(parsed.token/*process.env.TOKEN*/);
     }
 
     async getToken(): Promise<any> {
