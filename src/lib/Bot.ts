@@ -32,13 +32,8 @@ export default class Bot {
             await this.client.user.setActivity(`The Best Bot In the World`)
         });
 
-        console.log('getting secret');
         let secret = await this.getToken();
-
         let parsed = JSON.parse(secret);
-
-        console.log('token aquired: ', parsed.token);
-
         return await this.client.login(parsed.token/*process.env.TOKEN*/);
     }
 
