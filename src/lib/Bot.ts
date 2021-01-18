@@ -55,16 +55,26 @@ export default class Bot {
 
         return new Promise((resolve, reject) => {
 
+            console.log('about to call getSecretValue from client');
+
             client.getSecretValue({SecretId: secretName}, function(err, data) {
+
+                console.log('received a response');
+
                 if (err) {
-                    if (err.code === 'DecryptionFailureException')
+
+                    console.error(err);
+
+                    if (err.code === 'DecryptionFailureException') {
                         // Secrets Manager can't decrypt the protected secret text using the provided KMS key.
                         // Deal with the exception here, and/or rethrow at your discretion.
                         reject(err);
-                    else if (err.code === 'InternalServiceErrorException')
+                    }
+                    else if (err.code === 'InternalServiceErrorException') {
                         // An error occurred on the server side.
                         // Deal with the exception here, and/or rethrow at your discretion.
                         reject(err);
+                    }
                     else if (err.code === 'InvalidParameterException')
                         // You provided an invalid value for a parameter.
                         // Deal with the exception here, and/or rethrow at your discretion.
