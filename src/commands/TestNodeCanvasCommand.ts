@@ -22,6 +22,6 @@ export const testnodecanvas: ICommand = {
                                 .toBuffer();
 
         const attachment = new MessageAttachment(image, 'image.png');
-        message.channel.send(attachment);
+        await message.channel.send(attachment);
     }
 };

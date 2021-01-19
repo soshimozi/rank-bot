@@ -6,6 +6,7 @@ export const join:ICommand =  {
     role: '',
     isAdmin: false,
     handler: async (client: Client, message:Message, ...parameters: string[]):Promise<void> => {
+        
         const voiceChannel = message.member.voice.channel;
         if (!voiceChannel || voiceChannel.type !== 'voice') {
             message.reply('I couldn\'t connect to your voice channel or the channel is not a voice channel...');

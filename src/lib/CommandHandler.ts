@@ -38,6 +38,9 @@ export const CommandHandler = async function (err: unknown,
             return;
         }
 
+        // music player messgaes handled by player
+        if(message.content.toLowerCase() === '!skip') return;
+        
         // get rid of prefix
         const messageParts = message.content.split(" ");
         const commandName = messageParts[0].substr(1);
@@ -59,6 +62,8 @@ export const CommandHandler = async function (err: unknown,
                 return;
             }
         }
+
+        
 
 
         // TODO: add setting to display this message or not

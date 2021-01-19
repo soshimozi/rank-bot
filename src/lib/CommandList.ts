@@ -5,5 +5,14 @@ import {rank} from '../commands/RankCommand';
 import { testnodecanvas } from "../commands/TestNodeCanvasCommand";
 import { join } from "../commands/JoinCommand";
 import { addbadge } from "../commands/AddBadgeCommand";
+import { testyoutube } from "../commands/TestYouTubeCommand";
+import { addsong } from "../commands/AddSongCommand";
+import { play } from "../commands/PlayCommand";
+import { pause } from "../commands/PauseCommand";
+import { resume } from "../commands/ResumeCommand";
+import { volume } from "../commands/VolumeCommand";
+import { showqueue } from "../commands/ShowQueueCommand";
 
-export const CommandList:ICommand[] = [rank, leaderboard, addreward, testnodecanvas, join, addbadge];
+export const CommandList:ICommand[] = 
+        [rank, leaderboard, addreward, testnodecanvas, addbadge, 
+        join, addsong, play, pause, resume, volume, showqueue];

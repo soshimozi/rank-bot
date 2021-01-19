@@ -1,9 +1,8 @@
-import { Client, Guild, GuildMember, Message,  MessageEmbed, MessageReaction, Speaking, User, VoiceState } from "discord.js";
+import { Client, Guild, Message,  MessageReaction, User, VoiceState } from "discord.js";
 import {CommandHandler} from './CommandHandler';
 import { GuildCreateHandler } from "./GuildCreateHandler";
 import { ReactionHandler } from "./ReactionHandler";
 
-import { sendToMessageOwner } from "./Utils";
 const AWS = require('aws-sdk');
 
 export default class Bot {
@@ -24,8 +23,6 @@ export default class Bot {
         this.client.on('messageReactionAdd', async(reaction:MessageReaction, user: User) => await ReactionHandler(null, this.client, reaction, user));
 
         this.client.on('voiceStateUpdate', async(oldState: VoiceState, newState: VoiceState) => {
-             console.log('newState ', newState);
-             console.log('oldState ', oldState);
         });
 
         this.client.on('ready', async () => { 
@@ -37,7 +34,7 @@ export default class Bot {
         return await this.client.login(parsed.token/*process.env.TOKEN*/);
     }
 
-    async getToken(): Promise<any> {
+    async getToken(): Promise<string> {
         // get token from secrets manager
 
         const  region = "us-west-2",

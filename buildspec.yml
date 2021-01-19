@@ -29,6 +29,7 @@ phases:
       - cp -r scripts/ dist/
       - echo "PREFIX=!" > dist/.env
       - echo "DATABASENAME=/data/rankbot-database" >> dist/.env
+      - echo "YOUTUBEAPIKEY=$YOUTUBEAPIKEY" >> dist/.env
 
 artifacts:
   files:

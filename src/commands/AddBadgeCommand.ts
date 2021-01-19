@@ -24,17 +24,17 @@ export const addbadge:ICommand =  {
         }
 
         if(!type) {
-            message.reply("You must supply a name for the badge.")
+            await message.reply("You must supply a name for the badge.")
             return;
         }
 
         if(!rank) {
-            message.reply("You must supply a rank value for the badge.")
+            await message.reply("You must supply a rank value for the badge.")
             return;
         }        
 
         if(!value) {
-            message.reply("You must supply a value for the badge.")
+            await message.reply("You must supply a value for the badge.")
             return;
         }        
 
@@ -50,6 +50,6 @@ export const addbadge:ICommand =  {
         });
 
         badge.value = value;
-        badge.save();
+        await badge.save();
     }
 };

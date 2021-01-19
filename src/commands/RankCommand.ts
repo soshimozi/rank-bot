@@ -12,19 +12,17 @@ export const rank: ICommand = {
     handler: async (client:Client, message:Message):Promise<void> => {
 
         let avatar = await canvacord.Canvas.circle(message.author.displayAvatarURL({ dynamic: false, format: 'png' }));
-        //let image = await canvacord.Canvas.circle(avatar);
 
-        const rank = new canvacord.Rank()
-            .setAvatar(message.author.displayAvatarURL({format: "png"}))
-            .setCurrentXP(435)
-            .setRequiredXP(1200)
-            .setProgressBar("#FFFFFF", "COLOR")
-            .setUsername(message.author.username)
-            .setDiscriminator(message.author.discriminator);
+        // const rank = new canvacord.Rank()
+        //     .setAvatar(message.author.displayAvatarURL({format: "png"}))
+        //     .setCurrentXP(435)
+        //     .setRequiredXP(1200)
+        //     .setProgressBar("#FFFFFF", "COLOR")
+        //     .setUsername(message.author.username)
+        //     .setDiscriminator(message.author.discriminator);
 
-        let buffer = await rank.build();
+        // let buffer = await rank.build();
 
-        // TODO: Build an actual rank card based on user stats
         // TODO: add user stats :D
         const image = await new RankCard()
                             //.setAvatar(message.author.avatarURL({format: "png" }))
@@ -51,6 +49,6 @@ export const rank: ICommand = {
         //let buffer = image.toBuffer();
 
         const attachment = new MessageAttachment(image.toBuffer(), "rankcard.png");
-        message.channel.send(attachment);
+        await message.channel.send(attachment);
     },
 };

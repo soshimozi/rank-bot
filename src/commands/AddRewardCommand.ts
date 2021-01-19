@@ -19,12 +19,12 @@ export const addreward:ICommand =  {
         }
 
         if(!roleName) {
-            message.reply("You must supply a role for the reward.")
+            await message.reply("You must supply a role for the reward.")
             return;
         }
 
         if(!level) {
-            message.reply("You must supply a level value for the reward.")
+            await message.reply("You must supply a level value for the reward.")
             return;
         }
 
@@ -46,7 +46,7 @@ export const addreward:ICommand =  {
                                     .setAuthor(client.user.username, client.user.displayAvatarURL())
                                     .setDescription(`Reward ${create ? 'created' : 'updated'} for level ${level} using role ${roleName}`)
 
-        message.channel.send(exampleEmbed);
+        await message.channel.send(exampleEmbed);
 
     }
 }
