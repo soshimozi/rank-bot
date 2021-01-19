@@ -13,7 +13,8 @@ import { resume } from "../commands/ResumeCommand";
 import { volume } from "../commands/VolumeCommand";
 import { showqueue } from "../commands/ShowQueueCommand";
 import { addplaylist } from "../commands/AddPlaylistCommand";
+import { help } from "../commands/HelpCommand";
 
 export const CommandList:ICommand[] = 
-        [rank, leaderboard, addreward, testnodecanvas, addbadge, 
+        [help, rank, leaderboard, addreward, testnodecanvas, addbadge, 
         join, addsong, play, pause, resume, volume, showqueue, addplaylist];
