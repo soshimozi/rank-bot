@@ -107,7 +107,7 @@ export const play:ICommand = {
 
 
   
-            if(SongQueueArrayInst[message.guild.id].songs.length > 1) {
+            if(SongQueueArrayInst[message.guild.id].songs.length > 0) {
                 embed.fields.push({
                   name: 'Up Next',
                   value: SongQueueArrayInst[message.guild.id].songs[0].title,
