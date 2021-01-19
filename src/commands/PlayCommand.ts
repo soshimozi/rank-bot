@@ -36,6 +36,9 @@ export const play:ICommand = {
                 await message.channel.send('Queue is empty');
                 SongQueueArrayInst[message.guild.id].playing = false;
                 message.member.voice.channel.leave();
+
+                // TODO: get a default activity string
+                client.user.setActivity()
                 return;
             }
     
@@ -79,7 +82,7 @@ export const play:ICommand = {
                 title: ' ',
                 color: 0x2196f3,
                 author: {
-                name: `Up next: ${song.title}`,
+                name: `Now Playing: ${song.title}`,
                 icon_url: `https://img.youtube.com/vi/${song.videoId}/hqdefault.jpg`
                 },
                 thumbnail: {
@@ -102,7 +105,17 @@ export const play:ICommand = {
                 }
             }
 
-            client.user.setActivity(song.title);
+
+  
+            if(SongQueueArrayInst[message.guild.id].songs.length > 1) {
+                embed.fields.push({
+                  name: 'Up Next',
+                  value: SongQueueArrayInst[message.guild.id].songs[0].title,
+                  inline: false
+                });
+              }            
+
+            await client.user.setActivity(song.title);
     
             await message.channel.send({embed});
         }
