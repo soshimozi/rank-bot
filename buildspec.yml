@@ -31,7 +31,6 @@ phases:
       - echo "DATABASENAME=/data/rankbot-database" >> dist/.env
       - echo "YOUTUBEAPIKEY=$YOUTUBEAPIKEY" >> dist/.env
       - echo "DISCORDBOTKEY=$DISCORDBOTKEY" >> dist/.env
-      - echo "TEST $TEST" >> test.txt
 
 artifacts:
   files:
