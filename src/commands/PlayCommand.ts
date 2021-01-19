@@ -102,7 +102,7 @@ export const play:ICommand = {
                 }
             }
 
-            client.user.setActivity('HAL-9000 | The best bot for the best people, unless your name is Dante then this bot was made explicitly to drive you crazy.')
+            client.user.setActivity(song.title);
     
             await message.channel.send({embed});
         }
