@@ -64,14 +64,14 @@ export const addplaylist:ICommand =  {
                         info = await yt.getInfo(videoUrl);
                     }
                     catch(err) {
-                        await message.channel.send(`Failed to get information about YouTube link ${videoUrl}: ${err}`);
+                        await message.reply(`Failed to get information about YouTube link ${videoUrl}: ${err}`);
                         continue;
                     }
 
                     count++;
                     if (!SongQueueArrayInst[message.guild.id]) SongQueueArrayInst[message.guild.id] = new SongQueue();
                     SongQueueArrayInst[message.guild.id].songs.push({url: videoUrl, title: info.videoDetails.title, requester: message.author.username, videoId: info.videoDetails.videoId});
-                    await message.channel.send(`added **${info.videoDetails.title}** to the queue`);
+                    await message.channel.send(`${message.author.username} just added **${info.videoDetails.title}** to the queue via playlsit ${id}`);
                 }
             
                 nextPageToken = data.nextPageToken;

@@ -7,7 +7,7 @@ export const showqueue:ICommand =  {
     handler: async (client: Client, message:Message, ...parameters: string[]):Promise<void> => {
 
         if (SongQueueArrayInst[message.guild.id] === undefined || SongQueueArrayInst[message.guild.id].songs.length === 0) {
-            await message.channel.send(`Add some songs to the queue first with ${process.env.PREFIX}addsong`);
+            await message.reply(`Add some songs to the queue first with ${process.env.PREFIX}addsong`);
             return;
         }
 
@@ -27,14 +27,3 @@ export const showqueue:ICommand =  {
         await message.reply(response);
     }
 }
-
-/*
-    if (BotState.isQueueEmpty()) {
-      return msg.reply('The queue is empty').then(m => {
-        if (autoDeleteMessage) {
-          setTimeout(() => m.delete(), autoDeleteMessageDelay)
-        }
-      })
-    }
-
-*/
