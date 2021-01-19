@@ -2,7 +2,7 @@ import { Client, Message } from "discord.js";
 import { ICommand } from "../interfaces/ICommand";
 
 export const help:ICommand =  {
-    name: 'addbadge',
+    name: 'help',
     isAdmin: true,
     handler: async (client: Client, message:Message, ...parameters: string[]):Promise<void> => {
         // we can ignore args for help
