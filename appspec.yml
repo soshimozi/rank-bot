@@ -22,3 +22,7 @@ hooks:
     - location: scripts/npm-start.sh
       timeout: 60
       runas: root
+  ApplicationStop:
+    - location: scripts/stop-server.sh
+      timeout: 300
+      runas: root
