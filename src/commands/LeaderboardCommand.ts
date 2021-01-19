@@ -5,8 +5,6 @@ import { LevelManager } from '../lib/LevelManager';
 export const leaderboard:ICommand = {
     name: 'leaderboard',
     description: 'Show current leaderboard',
-    role: '',
-    isAdmin: false,
     handler: async (client:Client, message:Message):Promise<void> => {
         let board = await LevelManager.getLeaderboard(message.guild.id);
 

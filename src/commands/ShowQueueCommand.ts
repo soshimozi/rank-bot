@@ -4,8 +4,6 @@ import { SongQueueArrayInst } from "../lib/SongQueueArray";
 
 export const showqueue:ICommand =  {
     name: 'showqueue',
-    role: '',
-    isAdmin: false,
     handler: async (client: Client, message:Message, ...parameters: string[]):Promise<void> => {
 
         if (SongQueueArrayInst[message.guild.id] === undefined || SongQueueArrayInst[message.guild.id].songs.length === 0) {

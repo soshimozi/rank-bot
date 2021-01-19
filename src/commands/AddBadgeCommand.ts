@@ -4,7 +4,6 @@ import { Badge } from "../models/Badge";
 
 export const addbadge:ICommand =  {
     name: 'addbadge',
-    role: 'Admin',
     isAdmin: true,
     handler: async (client: Client, message:Message, ...parameters: string[]):Promise<void> => {
         let  type:string;

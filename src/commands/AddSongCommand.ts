@@ -9,8 +9,6 @@ import { kMaxLength } from "buffer";
 export const addsong:ICommand = {
     name: 'addsong',
     description: 'Add a song to the music queue',
-    role: '',
-    isAdmin: false,
     handler: async (client:Client, message:Message, ... parameters:string[]):Promise<void> => {
         const url = parameters.length > 0 ? parameters[0] : '';
 

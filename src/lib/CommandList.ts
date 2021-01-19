@@ -12,7 +12,8 @@ import { pause } from "../commands/PauseCommand";
 import { resume } from "../commands/ResumeCommand";
 import { volume } from "../commands/VolumeCommand";
 import { showqueue } from "../commands/ShowQueueCommand";
+import { addplaylist } from "../commands/AddPlaylistCommand";
 
 export const CommandList:ICommand[] = 
         [rank, leaderboard, addreward, testnodecanvas, addbadge, 
-        join, addsong, play, pause, resume, volume, showqueue];
+        join, addsong, play, pause, resume, volume, showqueue, addplaylist];

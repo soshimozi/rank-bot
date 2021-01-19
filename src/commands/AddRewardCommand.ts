@@ -4,7 +4,6 @@ import { Reward } from "../models/Reward";
 
 export const addreward:ICommand =  {
     name: 'addreward',
-    role: 'Admin',
     isAdmin: true,
     handler: async (client: Client, message:Message, ...parameters: string[]):Promise<void> =>{
         let roleName:string;

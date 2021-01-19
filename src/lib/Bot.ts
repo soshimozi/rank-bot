@@ -22,21 +22,19 @@ export default class Bot {
 
         this.client.on('messageReactionAdd', async(reaction:MessageReaction, user: User) => await ReactionHandler(null, this.client, reaction, user));
 
-        this.client.on('voiceStateUpdate', async(oldState: VoiceState, newState: VoiceState) => {
-        });
+        this.client.on('voiceStateUpdate', async(oldState: VoiceState, newState: VoiceState) => {});
 
         this.client.on('ready', async () => { 
             await this.client.user.setActivity(`The Best Bot In the World`)
         });
 
-        let secret = await this.getToken();
-        let parsed = JSON.parse(secret);
-        return await this.client.login(parsed.token/*process.env.TOKEN*/);
+        //let secret = await this.getToken();
+        //let parsed = JSON.parse(secret);
+        return await this.client.login(process.env.DISCORDBOTKEY);
     }
 
     async getToken(): Promise<string> {
         // get token from secrets manager
-
         const  region = "us-west-2",
         secretName = "hal-9000-bot/config";
 

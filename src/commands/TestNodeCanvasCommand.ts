@@ -7,8 +7,7 @@ import RankCard from "../lib/RankCard";
 export const testnodecanvas: ICommand = {
     name: 'testnodecanvas',
     description: 'Show current rank card',
-    role: '',
-    isAdmin: false,
+    isAdmin: true,
     handler: async (client:Client, message:Message):Promise<void> => {     
 
         let image = await new RankCard()

@@ -7,23 +7,27 @@ import { ISongInfo } from "../interfaces/ISongInfo";
 export const play:ICommand = {
     name: 'play',
     description: 'Start playing current music queue',
-    role: '',
-    isAdmin: false,
     handler: async (client:Client, message:Message):Promise<void> => {
      
 		if (SongQueueArrayInst[message.guild.id] === undefined) {
-            await message.channel.send(`Add some songs to the queue first with ${process.env.PREFIX}addsong`);
+            await message.reply(`Add some songs to the queue first with ${process.env.PREFIX}addsong or ${process.env.PREFIX}addplaylist`);
             return;
         }
 
-		if (!message.guild.voice) {
+		if (!message.guild.voice || !message.guild.voice.connection) {
 
-            await message.channel.send(`I must be added to a voice channel first.  Please us the ${process.env.PREFIX}join command.`);
+            await message.reply(`I must be added to a voice channel first.  Please use the ${process.env.PREFIX}join command.`);
+
+            if(message.guild.voice.channel) {
+                message.guild.voice.channel.leave();
+            }
+
             return;
         } 
 
 		if (SongQueueArrayInst[message.guild.id].playing) {
-            await message.channel.send('You are already playing.');
+            await message.reply('You are already playing.');
+            return;
         } 
         
         let song = SongQueueArrayInst[message.guild.id].songs.shift();
@@ -56,7 +60,6 @@ export const play:ICommand = {
             const messageFilter = response => {
                 return response.content.toLowerCase() == `${process.env.PREFIX}skip`;
             };
-
             
             const collector = message.channel.createMessageCollector(messageFilter);
             SongQueueArrayInst[message.guild.id].collector = collector;
@@ -104,8 +107,6 @@ export const play:ICommand = {
                 text: 'HAL-9000 | The best bot for the best people, unless your name is Dante then this bot was made explicitly to drive you crazy.'
                 }
             }
-
-
   
             if(SongQueueArrayInst[message.guild.id].songs.length > 0) {
                 embed.fields.push({

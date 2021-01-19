@@ -7,8 +7,6 @@ const moment = require('moment');
 export const rank: ICommand = {
     name: 'showrank',
     description: 'Show current rank card',
-    role: '',
-    isAdmin: false,
     handler: async (client:Client, message:Message):Promise<void> => {
 
         let avatar = await canvacord.Canvas.circle(message.author.displayAvatarURL({ dynamic: false, format: 'png' }));

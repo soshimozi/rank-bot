@@ -8,8 +8,7 @@ import {SongQueueArrayInst} from '../lib/SongQueueArray';
 export const testyoutube: ICommand = {
     name: 'testyoutube',
     description: 'Test Youtube',
-    role: '',
-    isAdmin: false,
+    isAdmin: true,
     handler: async (client:Client, message:Message, ...parameters: string[]):Promise<void> => {
         const url = parameters[0];
 

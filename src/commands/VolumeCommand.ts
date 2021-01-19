@@ -4,8 +4,6 @@ import { SongQueueArrayInst } from "../lib/SongQueueArray";
 
 export const volume:ICommand =  {
     name: 'volume',
-    role: '',
-    isAdmin: false,
     handler: async (client: Client, message:Message, ...parameters: string[]):Promise<void> => {
 
         if(parameters.length < 1) {
