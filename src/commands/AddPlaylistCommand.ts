@@ -31,7 +31,7 @@ export const addplaylist:ICommand =  {
         try {
             let list = await ytpl(id);
 
-            message.reply(JSON.stringify(list.items));
+            message.reply(JSON.stringify(list.items[0]));
 
             console.log('list: ', list);
         }
