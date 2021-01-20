@@ -13,11 +13,15 @@ export const rolldice:ICommand =  {
             return;
         }
 
+        // squish all parameters
+        var diceStr:string = parameters.join('');
+
+
         let value:number;
 
         try {
-            value = DiceRollEvaluator.evaluateRoll(parameters[0]);
-            await message.channel.send(`${message.author.username} just rolled a ${value} with function ${parameters[0]} `);
+            value = DiceRollEvaluator.evaluateRoll(diceStr);
+            await message.channel.send(`${message.author.username} just rolled a ${value} with function ${diceStr} `);
         }
         catch(err) {
             await message.reply(`The formula you supplied is invalid.  Please supply a valid formula.  See help for some examples.`)
