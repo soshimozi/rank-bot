@@ -10,4 +10,5 @@ export interface ISongQueue {
     collector?: MessageCollector;
     volume:number;
     currentVideoLength: number;
+    repeat:boolean;
 }

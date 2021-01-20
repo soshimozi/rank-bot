@@ -8,5 +8,6 @@ export class SongQueue implements ISongQueue {
     dispatcher = null;
     volume = 1;
     currentVideoLength = 0;
+    repeat: boolean = false;
 
 }

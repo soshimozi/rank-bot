@@ -2,7 +2,6 @@ import { Client, Message, MessageAttachment, MessageEmbed } from "discord.js";
 import { ICommand } from "../interfaces/ICommand";
 import {RankCard} from 'discord-canvas';
 const canvacord = require("canvacord");
-const moment = require('moment');
 
 export const rank: ICommand = {
     name: 'showrank',
