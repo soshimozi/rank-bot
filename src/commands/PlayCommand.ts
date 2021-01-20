@@ -119,7 +119,7 @@ export const play:ICommand = {
                 }
                 ],
                 footer: {
-                text: 'HAL-9000 | You may call me Hal.  Brought to you by BitwiseMobile Productions [www.bitwisemobile.com] and, of course, Caffeine'
+                text: 'Brought to you by BitwiseMobile Productions [www.bitwisemobile.com] and, of course, Caffeine.  Inspired by the greatest son in the world, Daniel.'
                 }
             }
   
