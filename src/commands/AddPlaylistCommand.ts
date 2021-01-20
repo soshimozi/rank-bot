@@ -56,7 +56,9 @@ export const addplaylist:ICommand =  {
             info = list.items[i];
 
             const videoId = info.id;
-            const url:string = info.shortUrl; // `https://www.youtube.com/watch?v=${videoId}`;
+            const url:string = info.shortUrl;
+            
+            // `https://www.youtube.com/watch?v=${videoId}`;
             
             // try {
             //     info = await yt.getInfo(videoUrl);
@@ -67,8 +69,8 @@ export const addplaylist:ICommand =  {
             //     continue;
             // }
 
-            if
-            count++;
+            //count++;
+
             if (!SongQueueArrayInst[message.guild.id]) SongQueueArrayInst[message.guild.id] = new SongQueue();
 
             let playlistAuthorInfo:IAuthorInfo = {name: list.author.name, url: list.author.url};
@@ -76,6 +78,8 @@ export const addplaylist:ICommand =  {
 
             SongQueueArrayInst[message.guild.id].songs.push({url, title: info.title, requester: message.author.username, videoId, length: info.durationSec, playlistInfo});
             await message.channel.send(`${message.author.username} just added **${info.title}** to the queue via a playlist`);
+
+            count++;
         }
 
         //let count = await processPlaylist(id, message);
