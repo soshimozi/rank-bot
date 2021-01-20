@@ -16,18 +16,6 @@ export const chucknorris:ICommand =  {
             return;
         }
         
-
-        const today = new Date();  // for example
-
-        // the number of .net ticks at the unix epoch
-        const epochTicks = 621355968000000000;
-
-        // there are 10000 .net ticks per millisecond
-        const ticksPerMillisecond = 10000;
-
-        // calculate the total number of .net ticks for your date
-        const timestamp = epochTicks + (today.getTime() * ticksPerMillisecond);
-
         let embed = {
             title: 'Chuck Norris Joke Generator',
             color: 0xff6600,
@@ -36,14 +24,7 @@ export const chucknorris:ICommand =  {
                 icon_url: `${client.user.avatarURL()}`,
             },
             type: 'Entertainment',
-            timestamp,
-            fields: [
-                {
-                    name: 'Link',
-                    value: `[Click Here](${response.data.url})`,
-                    inline: false
-                },
-            ],
+            timestamp: new Date(),
             thumbnail: {
                 url: `${response.data.icon_url}`
             },
