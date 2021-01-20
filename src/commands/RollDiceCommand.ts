@@ -1,7 +1,6 @@
 import { Client, Message } from "discord.js";
 import { ICommand } from "../interfaces/ICommand";
 import crypto from "crypto";
-import { try } from "bluebird";
 import DiceRollEvaluator from "../lib/DiceRoleEvaluator";
 
 export const rolldice:ICommand =  {
