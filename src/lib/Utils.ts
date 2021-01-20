@@ -7,7 +7,7 @@ export const randomInt = (min: number, max: number):number => {
 }
 
 export const setDefaultBotStatus = async (client:Client) => {
-    await client.user.setActivity(`HAL-9000 | You may call me Hal`);
+    await client.user.setActivity(`Idle Games`);
 }
 
 export const sendToMessageOwner = async (guild: Guild, whatToSend: APIMessageContentResolvable | (MessageOptions & { split?: false; }) | MessageAdditions): Promise<null> => {
