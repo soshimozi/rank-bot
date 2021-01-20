@@ -17,28 +17,38 @@ export const chucknorris:ICommand =  {
         }
         
 
+        const today = new Date();  // for example
+
+        // the number of .net ticks at the unix epoch
+        const epochTicks = 621355968000000000;
+
+        // there are 10000 .net ticks per millisecond
+        const ticksPerMillisecond = 10000;
+
+        // calculate the total number of .net ticks for your date
+        const timestamp = epochTicks + (today.getTime() * ticksPerMillisecond);
+
         let embed = {
             title: 'Chuck Norris Joke Generator',
             color: 0xff6600,
-            author: {
-                name: `Chuck Norris`,
-                icon_url: `${response.data.icon_url}`
-            },
-            thumbnail: {
+            // author: {
+            //     name: `Chuck Norris`,
+            //     icon_url: `${response.data.icon_url}`,
+            //     url: `${response.data.url}`
+            // },
+            type: 'Entertainment',
+            timestamp,
+            fields: [
+                {
+                    name: 'Link',
+                    value: `[Click Here](${response.data.url})`,
+                    inline: false
+                },
+            ],
+            image: {
                 url: `${response.data.icon_url}`
             },
-            fields: [
-            {
-                name: 'Link',
-                value: `${response.data.url})`,
-                inline: true
-            },
-            {
-                name: 'Joke',
-                value: `${response.data.value}`,
-                inline: true
-            }
-            ],
+            description: `${response.data.value}`,
             footer: {
                 text: 'Brought to you by BitwiseMobile Productions [www.bitwisemobile.com] and, of course, Caffeine.  Inspired by the greatest son in the world, Daniel.'
             }
