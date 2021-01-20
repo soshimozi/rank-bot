@@ -31,11 +31,10 @@ export const chucknorris:ICommand =  {
         let embed = {
             title: 'Chuck Norris Joke Generator',
             color: 0xff6600,
-            // author: {
-            //     name: `Chuck Norris`,
-            //     icon_url: `${response.data.icon_url}`,
-            //     url: `${response.data.url}`
-            // },
+            author: {
+                name: client.user.username,
+                icon_url: `${client.user.avatarURL()}`,
+            },
             type: 'Entertainment',
             timestamp,
             fields: [
@@ -45,7 +44,7 @@ export const chucknorris:ICommand =  {
                     inline: false
                 },
             ],
-            image: {
+            thumbnail: {
                 url: `${response.data.icon_url}`
             },
             description: `${response.data.value}`,
