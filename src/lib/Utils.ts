@@ -1,9 +1,13 @@
-import { APIMessageContentResolvable, Guild, Message, MessageAdditions, MessageEmbed, MessageOptions } from "discord.js";
+import { APIMessageContentResolvable, Client, Guild, Message, MessageAdditions, MessageEmbed, MessageOptions } from "discord.js";
 import { fillTextWithTwemoji } from "@canvacord/emoji-parser";
 import { CanvasRenderingContext2D } from "canvas";
 
 export const randomInt = (min: number, max: number):number => {
     return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+export const setDefaultBotStatus = async (client:Client) => {
+    await client.user.setActivity(`HAL-9000 | You may call me Hal`, {type:"CUSTOM_STATUS"});
 }
 
 export const sendToMessageOwner = async (guild: Guild, whatToSend: APIMessageContentResolvable | (MessageOptions & { split?: false; }) | MessageAdditions): Promise<null> => {

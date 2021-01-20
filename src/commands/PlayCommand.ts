@@ -3,6 +3,7 @@ import { ICommand } from "../interfaces/ICommand";
 import { SongQueueArrayInst } from "../lib/music/SongQueueArray";
 import yt = require('ytdl-core');
 import { ISongInfo } from "../interfaces/ISongInfo";
+import { setDefaultBotStatus } from "../lib/Utils";
 
 export const play:ICommand = {
     name: 'play',
@@ -42,9 +43,23 @@ export const play:ICommand = {
                 message.member.voice.channel.leave();
 
                 // TODO: get a default activity string
-                client.user.setActivity()
+                //client.user.setActivity("HAL-9000 | You may call me Hal", {type: "CUSTOM_STATUS"});
+                setDefaultBotStatus(client);
                 return;
-            }
+            }		
+            
+            if (!message.guild.voice || !message.guild.voice.connection) {
+
+                await message.channel.send(`I must be added to a voice channel first.  Please use the ${process.env.PREFIX}join command.`);
+    
+                if(message.guild.voice.channel) {
+                    message.guild.voice.channel.leave();
+                }
+    
+                //client.user.setActivity("HAL-9000 | You may call me Hal", {type:"CUSTOM_STATUS"})
+                setDefaultBotStatus(client);
+                return;
+            } 
     
             const dispatcher = message.guild.voice.connection.play(yt(song.url, { filter: "audioonly" }));
             SongQueueArrayInst[message.guild.id].dispatcher = dispatcher;
@@ -104,7 +119,7 @@ export const play:ICommand = {
                 }
                 ],
                 footer: {
-                text: 'HAL-9000 | The best bot for the best people, unless your name is Dante then this bot was made explicitly to drive you crazy.'
+                text: 'HAL-9000 | You may call me Hal.  Brought to you by BitwiseMobile Productions [www.bitwisemobile.com] and, of course, Caffeine'
                 }
             }
   
@@ -116,7 +131,7 @@ export const play:ICommand = {
                 });
               }            
 
-            await client.user.setActivity(song.title);
+            await client.user.setActivity(song.title, {type: "STREAMING"});
     
             await message.channel.send({embed});
         }

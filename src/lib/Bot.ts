@@ -2,6 +2,7 @@ import { Client, Guild, Message,  MessageReaction, User, VoiceState } from "disc
 import {CommandHandler} from './handlers/CommandHandler';
 import { GuildCreateHandler } from "./handlers/GuildCreateHandler";
 import { ReactionHandler } from "./handlers/ReactionHandler";
+import { setDefaultBotStatus } from "./Utils";
 
 const AWS = require('aws-sdk');
 
@@ -25,7 +26,8 @@ export default class Bot {
         this.client.on('voiceStateUpdate', async(oldState: VoiceState, newState: VoiceState) => {});
 
         this.client.on('ready', async () => { 
-            await this.client.user.setActivity(`The Best Bot In the World`)
+            //await this.client.user.setActivity(`HAL-9000 | You may call me Hal`, {type:"CUSTOM_STATUS"})
+            setDefaultBotStatus(this.client);
         });
 
         //let secret = await this.getToken();
