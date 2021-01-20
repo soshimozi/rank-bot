@@ -7,7 +7,7 @@ export const showqueue:ICommand =  {
     handler: async (client: Client, message:Message, ...parameters: string[]):Promise<void> => {
 
         if (SongQueueArrayInst[message.guild.id] === undefined || SongQueueArrayInst[message.guild.id].songs.length === 0) {
-            await message.reply(`Add some songs to the queue first with ${process.env.PREFIX}addsong`);
+            await message.reply(`Add some songs to the queue first with ${process.env.PREFIX}addsong or ${process.env.PREFIX}addplaylist`);
             return;
         }
 
