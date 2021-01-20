@@ -51,10 +51,12 @@ export const addplaylist:ICommand =  {
         
         let count:number = 0;
         for (let i = 0; i < list.items.length; i++) {
-            let info:yt.videoInfo;
+            let info:ytpl.Item;
 
-            const videoId = list.items[i].id;
-            const videoUrl:string = list.items[i].shortUrl; // `https://www.youtube.com/watch?v=${videoId}`;
+            info = list.items[i];
+
+            const videoId = info.id;
+            const url:string = info.shortUrl; // `https://www.youtube.com/watch?v=${videoId}`;
             
             // try {
             //     info = await yt.getInfo(videoUrl);
@@ -71,8 +73,8 @@ export const addplaylist:ICommand =  {
             let playlistAuthorInfo:IAuthorInfo = {name: list.author.name, url: list.author.url};
             let playlistInfo:IPlaylistInfo = {id: list.id, url: list.url, title: list.title, thumbnail: list.bestThumbnail.url, author: playlistAuthorInfo};
 
-            SongQueueArrayInst[message.guild.id].songs.push({url: videoUrl, title: info.videoDetails.title, requester: message.author.username, videoId: info.videoDetails.videoId, length: parseFloat(info.videoDetails.lengthSeconds), playlistInfo});
-            await message.channel.send(`${message.author.username} just added **${info.videoDetails.title}** to the queue via a playlist`);
+            SongQueueArrayInst[message.guild.id].songs.push({url, title: info.title, requester: message.author.username, videoId, length: info.durationSec, playlistInfo});
+            await message.channel.send(`${message.author.username} just added **${info.title}** to the queue via a playlist`);
         }
 
         //let count = await processPlaylist(id, message);

@@ -4,7 +4,6 @@ import { SongQueueArrayInst } from "../lib/music/SongQueueArray";
 import yt = require('ytdl-core');
 import { ISongInfo } from "../interfaces/ISongInfo";
 import { setDefaultBotStatus } from "../lib/Utils";
-import { listMetadataForTarget } from "inversify/dts/utils/serialization";
 
 export const play:ICommand = {
     name: 'play',
@@ -143,7 +142,7 @@ export const play:ICommand = {
             }            
 
             if(song.playlistInfo) {
-                
+
                 embed.fields.push({
                     name: 'Playlist Title',
                     value: song.playlistInfo.title,

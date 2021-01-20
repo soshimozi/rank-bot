@@ -16,7 +16,8 @@ import { help } from "../commands/HelpCommand";
 import { apod } from "../commands/ApodCommand";
 import { time } from "../commands/TimeCommand";
 import { repeat } from "../commands/RepeatCommand";
+import { purgequeue } from "../commands/PurgeQueueCommand";
 
 export const CommandList:ICommand[] = 
-        [help, rank, leaderboard, addreward, testnodecanvas, addbadge, apod, time, repeat,
+        [help, rank, leaderboard, addreward, testnodecanvas, addbadge, apod, time, repeat, purgequeue,
         join, addsong, play, pause, resume, volume, showqueue, addplaylist];
