@@ -14,7 +14,9 @@ import { volume } from "../commands/VolumeCommand";
 import { showqueue } from "../commands/ShowQueueCommand";
 import { addplaylist } from "../commands/AddPlaylistCommand";
 import { help } from "../commands/HelpCommand";
+import { apod } from "../commands/ApodCommand";
+import { time } from "../commands/TimeCommand";
 
 export const CommandList:ICommand[] = 
-        [help, rank, leaderboard, addreward, testnodecanvas, addbadge, 
+        [help, rank, leaderboard, addreward, testnodecanvas, addbadge, apod, time,
         join, addsong, play, pause, resume, volume, showqueue, addplaylist];

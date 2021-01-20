@@ -4,6 +4,7 @@ export interface ICommand {
     name: string;
     description?: string;
     helpText?:string;
+    usage?:string;
     role?: string;
     isAdmin?: boolean;
     exp?: number,
