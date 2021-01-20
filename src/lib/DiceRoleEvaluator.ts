@@ -16,7 +16,7 @@ export default class DiceRollEvaluator {
 
         delta = (rng_max - rng_min + 1);
 
-        value = crypto.randomInt(1, delta);
+        value = crypto.randomInt(0, delta);
         value = parseInt(value);
 
         return value + rng_min;
@@ -55,7 +55,7 @@ export default class DiceRollEvaluator {
         max = Math.max(parseInt(max), qta) || qta;
 
         for(let val; max--;) {
-            val = crypto.randomInt(1, dice);
+            val = crypto.randomInt(0, dice);
             val = Math.floor(val) + 1;
             rolls.push(val);
         }
