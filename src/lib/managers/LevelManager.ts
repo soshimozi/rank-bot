@@ -1,9 +1,9 @@
 import { GuildMember, Message, MessageEmbed } from "discord.js";
 import moment = require("moment");
 import { FindOptions, Op } from "sequelize";
-import { Level } from "../models/Level";
-import { Reward } from "../models/Reward";
-import {randomInt, sendToMessageOwner, generateSuccessEmbed} from "./Utils";
+import { Level } from "../../models/Level";
+import { Reward } from "../../models/Reward";
+import {randomInt, sendToMessageOwner, generateSuccessEmbed} from "../Utils";
 
 export class LevelManager {
     

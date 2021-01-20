@@ -1,6 +1,6 @@
 import { Client, Message } from "discord.js";
 import { ICommand } from "../interfaces/ICommand";
-import { LevelManager } from '../lib/LevelManager';
+import { LevelManager } from '../lib/managers/LevelManager';
 
 export const leaderboard:ICommand = {
     name: 'leaderboard',

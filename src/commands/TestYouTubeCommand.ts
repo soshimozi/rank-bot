@@ -1,9 +1,9 @@
 import { Client, Message, StreamDispatcher } from "discord.js";
 import { ICommand } from "../interfaces/ICommand";
-import { SongQueue } from "../lib/SongQueue";
+import { SongQueue } from "../lib/music/SongQueue";
 //import MusicBot from "../lib/MusicBot";
 import yt = require('ytdl-core');
-import {SongQueueArrayInst} from '../lib/SongQueueArray';
+import {SongQueueArrayInst} from '../lib/music/SongQueueArray';
 
 export const testyoutube: ICommand = {
     name: 'testyoutube',

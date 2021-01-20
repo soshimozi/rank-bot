@@ -1,6 +1,6 @@
 import Canvas, { createCanvas } from 'canvas';
 import path from 'path';
-import { applyText, renderEmoji, shorten, toAbbrev } from './Utils';
+import { applyText, renderEmoji, shorten, toAbbrev } from '../Utils';
 
 /**
  * @typedef {object} CanvacordRankData

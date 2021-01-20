@@ -2,13 +2,13 @@
 import { Client, Message } from "discord.js";
 import { ICommand } from "../interfaces/ICommand";
 import yt = require('ytdl-core');
-import {SongQueueArrayInst} from '../lib/SongQueueArray';
-import { SongQueue } from "../lib/SongQueue";
-import { kMaxLength } from "buffer";
+import {SongQueueArrayInst} from '../lib/music/SongQueueArray';
+import { SongQueue } from "../lib/music/SongQueue";
 
 export const addsong:ICommand = {
     name: 'addsong',
     description: 'Add a song to the music queue',
+    exp: 50,
     handler: async (client:Client, message:Message, ... parameters:string[]):Promise<void> => {
         const url = parameters.length > 0 ? parameters[0] : '';
 

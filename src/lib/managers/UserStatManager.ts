@@ -1,5 +1,5 @@
 import { Guild, User } from "discord.js";
-import { UserStat } from "../models/UserStat";
+import { UserStat } from "../../models/UserStat";
 
 export class UserStatManager {
 

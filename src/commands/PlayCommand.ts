@@ -1,6 +1,6 @@
 import { Client, Message } from "discord.js";
 import { ICommand } from "../interfaces/ICommand";
-import { SongQueueArrayInst } from "../lib/SongQueueArray";
+import { SongQueueArrayInst } from "../lib/music/SongQueueArray";
 import yt = require('ytdl-core');
 import { ISongInfo } from "../interfaces/ISongInfo";
 
@@ -74,7 +74,7 @@ export const play:ICommand = {
                 }
             });
     
-            dispatcher.on('finish', async() => {
+            dispatcher.once('finish', async() => {
                 SongQueueArrayInst[message.guild.id].collector.stop();
 
                 let song = SongQueueArrayInst[message.guild.id].songs.shift();

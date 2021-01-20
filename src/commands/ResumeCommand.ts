@@ -1,6 +1,6 @@
 import { Client, Message } from "discord.js";
 import { ICommand } from "../interfaces/ICommand";
-import { SongQueueArrayInst } from "../lib/SongQueueArray";
+import { SongQueueArrayInst } from "../lib/music/SongQueueArray";
 
 export const resume:ICommand =  {
     name: 'resume',

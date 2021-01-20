@@ -1,7 +1,7 @@
 import { Client, Guild, Message,  MessageReaction, User, VoiceState } from "discord.js";
-import {CommandHandler} from './CommandHandler';
-import { GuildCreateHandler } from "./GuildCreateHandler";
-import { ReactionHandler } from "./ReactionHandler";
+import {CommandHandler} from './handlers/CommandHandler';
+import { GuildCreateHandler } from "./handlers/GuildCreateHandler";
+import { ReactionHandler } from "./handlers/ReactionHandler";
 
 const AWS = require('aws-sdk');
 

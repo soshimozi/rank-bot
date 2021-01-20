@@ -2,11 +2,12 @@ import axios from "axios";
 import { Client, Message } from "discord.js";
 import { ICommand } from "../interfaces/ICommand";
 import yt = require('ytdl-core');
-import { SongQueueArrayInst } from "../lib/SongQueueArray";
-import { SongQueue } from "../lib/SongQueue";
+import { SongQueueArrayInst } from "../lib/music/SongQueueArray";
+import { SongQueue } from "../lib/music/SongQueue";
 
 export const addplaylist:ICommand =  {
     name: 'addplaylist',
+    exp: 400,
     handler: async (_client: Client, message:Message, ...parameters: string[]):Promise<void> => {
 
         if(parameters.length < 1) {

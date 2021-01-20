@@ -6,5 +6,6 @@ export interface ICommand {
     helpText?:string;
     role?: string;
     isAdmin?: boolean;
+    exp?: number,
     handler: (client: Client, message: Message, ...parameters: string[]) => Promise<void>
 }

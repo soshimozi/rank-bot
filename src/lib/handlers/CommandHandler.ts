@@ -1,75 +1,76 @@
 import { Client, Message } from "discord.js";
-import { CommandList } from "./CommandList";
-import { LevelManager } from './LevelManager';
-import { UserStatManager } from "./UserStatManager";
-import { randomInt } from "./Utils";
+import { ICommandHandler } from "../../interfaces/ICommandHandler";
+import { CommandList } from "../CommandList";
+import { LevelManager } from '../managers/LevelManager';
+import { UserStatManager } from "../managers/UserStatManager";
+import { randomInt } from "../Utils";
 
-export const CommandHandler = async function (err: unknown,
+export const CommandHandler:ICommandHandler = async (err: unknown,
     client: Client,
     message: Message,
-    oldMessage?: Message): Promise<void> {
+    oldMessage?: Message): Promise<void> => {
 
-        if (err) {
-            console.error(err);
-            return;
-        }
+    if (err) {
+        console.error(err);
+        return;
+    }
 
-        if(!shouldHandleMessage(client, message, oldMessage)) {
-            return;
-        }
+    if(!shouldHandleMessage(client, message, oldMessage)) {
+        return;
+    }
 
-        // if it's a valid message then give some XP!
-        await LevelManager.giveGuildUserExp(message.guild.member(message.author.id), message);
-        await UserStatManager.addUserMessage(message.author, message.guild);
+    // if it's a valid message then give some XP!
+    await LevelManager.giveGuildUserExp(message.guild.member(message.author.id), message);
+    await UserStatManager.addUserMessage(message.author, message.guild);
 
-        // check if there are dargins in the message
-        if(darginsBeHere(message)) {
-            return;
-        }
+    // check if there are dargins in the message
+    if(darginsBeHere(message)) {
+        return;
+    }
 
-        // check if it's a hug message
-        if(giveHugs(message)) {
-            return;
-        }
-        
-        // TODO: move prefix into settings?
-        // is it a command?
-        if(!message.content.startsWith(process.env.PREFIX)) {
-            return;
-        }
+    // check if it's a hug message
+    if(giveHugs(message)) {
+        return;
+    }
+    
+    // TODO: move prefix into settings?
+    // is it a command?
+    if(!message.content.startsWith(process.env.PREFIX)) {
+        return;
+    }
 
-        // music player messgaes handled by player
-        if(message.content.toLowerCase() === '!skip') return;
-        
-        // get rid of prefix
-        const messageParts = message.content.split(" ");
-        const commandName = messageParts[0].substr(1);
-        const args = messageParts.slice(1);
+    // music player messgaes handled by player
+    if(message.content.toLowerCase() === '!skip') return;
+    
+    // get rid of prefix
+    const messageParts = message.content.split(" ");
+    const commandName = messageParts[0].substr(1);
+    const args = messageParts.slice(1);
 
-        let isAdmin = message.guild.member(message.author.id).permissions.has('ADMINISTRATOR');
+    let isAdmin = message.guild.member(message.author.id).permissions.has('ADMINISTRATOR');
 
-        // look for command by name in list
-        for(const command of CommandList) {
-            if (command.name === commandName) {
-                
-                // we found the command, but we can't execute it
-                if(command.isAdmin && !isAdmin) {
-                    message.guild.owner.send(`There was an attempt at using an admin command by ${message.author.username}`);
-                    break;
-                }
-
-                await command.handler(client, message, ...args);
-                return;
+    // look for command by name in list
+    for(const command of CommandList) {
+        if (command.name === commandName) {
+            
+            // we found the command, but we can't execute it
+            if(command.isAdmin && !isAdmin) {
+                message.guild.owner.send(`There was an attempt at using an admin command by ${message.author.username}`);
+                break;
             }
+
+            await command.handler(client, message, ...args);
+            return;
         }
+    }
 
-        
+    
 
 
-        // TODO: add setting to display this message or not
-        message.channel.send(`I am sorry, but \`${commandName}\` is not a valid command.`);
+    // TODO: add setting to display this message or not
+    message.channel.send(`I am sorry, but \`${commandName}\` is not a valid command.`);
 
-    };
+};
 
 const giveHugs = (message: Message): boolean => {
     if (message.content.toLowerCase().startsWith('hug')) { 

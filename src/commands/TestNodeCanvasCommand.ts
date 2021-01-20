@@ -2,7 +2,7 @@ import { Client, Message, MessageAttachment, MessageEmbed } from "discord.js";
 import { ICommand } from "../interfaces/ICommand";
 const { createCanvas, loadImage } = require('canvas')
 import Canvas from 'canvas';
-import RankCard from "../lib/RankCard";
+import RankCard from "../lib/templates/RankCard";
 
 export const testnodecanvas: ICommand = {
     name: 'testnodecanvas',
