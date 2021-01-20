@@ -67,6 +67,7 @@ export const addplaylist:ICommand =  {
             //     continue;
             // }
 
+            if
             count++;
             if (!SongQueueArrayInst[message.guild.id]) SongQueueArrayInst[message.guild.id] = new SongQueue();
 

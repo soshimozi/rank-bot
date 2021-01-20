@@ -38,8 +38,6 @@ export const play:ICommand = {
                 SongQueueArrayInst[message.guild.id].playing = false;
                 message.member.voice.channel.leave();
 
-                // TODO: get a default activity string
-                //client.user.setActivity("HAL-9000 | You may call me Hal", {type: "CUSTOM_STATUS"});
                 setDefaultBotStatus(client);
                 return;
             }		
@@ -133,14 +131,6 @@ export const play:ICommand = {
                 }
             }
   
-            if(SongQueueArrayInst[message.guild.id].songs.length > 0) {
-                embed.fields.push({
-                  name: 'Up Next',
-                  value: SongQueueArrayInst[message.guild.id].songs[0].title,
-                  inline: false
-                });
-            }            
-
             if(song.playlistInfo) {
 
                 embed.fields.push({
@@ -156,8 +146,15 @@ export const play:ICommand = {
                 });
             }
 
+            if(SongQueueArrayInst[message.guild.id].songs.length > 0) {
+                embed.fields.push({
+                  name: 'Up Next',
+                  value: SongQueueArrayInst[message.guild.id].songs[0].title,
+                  inline: false
+                });
+            }            
+
             await client.user.setActivity(song.title, {type: "STREAMING"});
-    
             await message.channel.send({embed});
         }
 
