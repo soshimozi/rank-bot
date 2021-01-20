@@ -23,7 +23,21 @@ export const addplaylist:ICommand =  {
             id = await ytpl.getPlaylistID(parameters[0]);
         }
         catch(err) {
+            console.error(err);
             await message.reply(`Could not validate the playlist.  Please specify a valid playlist url or playlist id.`)
+            return;
+        }
+
+        try {
+            let list = await ytpl(id);
+
+            message.reply(list.items);
+            
+            console.log('list: ', list);
+        }
+        catch(err) {
+            console.error(err);
+            await message.reply(`Could not retrieve the playlist.  Please specify a valid playlist url or playlist id.`)
             return;
         }
 
@@ -76,6 +90,7 @@ async function processPlaylist(id: string, message:Message): Promise<number> {
                     info = await yt.getInfo(videoUrl);
                 }
                 catch(err) {
+                    console.error(err);
                     await message.reply(`Failed to get information about YouTube link ${videoUrl}: ${err}`);
                     continue;
                 }

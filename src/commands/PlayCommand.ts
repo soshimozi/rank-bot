@@ -89,12 +89,14 @@ export const play:ICommand = {
                 }
             });
     
+            let currentSong = song;
+            
             dispatcher.once('finish', async() => {
                 SongQueueArrayInst[message.guild.id].collector.stop();
 
                 if(SongQueueArrayInst[message.guild.id].repeat) {
-                    let song = SongQueueArrayInst[message.guild.id].songs[0];
-                    await playSong(song, message);
+                    
+                    await playSong(currentSong, message);
                     return;
                 }
 
