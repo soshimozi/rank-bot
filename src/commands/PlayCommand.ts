@@ -4,6 +4,7 @@ import { SongQueueArrayInst } from "../lib/music/SongQueueArray";
 import yt = require('ytdl-core');
 import { ISongInfo } from "../interfaces/ISongInfo";
 import { setDefaultBotStatus } from "../lib/Utils";
+import { listMetadataForTarget } from "inversify/dts/utils/serialization";
 
 export const play:ICommand = {
     name: 'play',
@@ -90,7 +91,7 @@ export const play:ICommand = {
             });
     
             let currentSong = song;
-            
+
             dispatcher.once('finish', async() => {
                 SongQueueArrayInst[message.guild.id].collector.stop();
 
@@ -139,7 +140,22 @@ export const play:ICommand = {
                   value: SongQueueArrayInst[message.guild.id].songs[0].title,
                   inline: false
                 });
-              }            
+            }            
+
+            if(song.playlistInfo) {
+                
+                embed.fields.push({
+                    name: 'Playlist Title',
+                    value: song.playlistInfo.title,
+                    inline: true
+                });
+
+                embed.fields.push({
+                    name: 'Playlist Url',
+                    value: song.playlistInfo.url,
+                    inline: true
+                });
+            }
 
             await client.user.setActivity(song.title, {type: "STREAMING"});
     

@@ -5,6 +5,8 @@ import yt = require('ytdl-core');
 import { SongQueueArrayInst } from "../lib/music/SongQueueArray";
 import { SongQueue } from "../lib/music/SongQueue";
 import ytpl = require('ytpl');
+import { IPlaylistInfo } from "../interfaces/IPlaylistInfo";
+import { IAuthorInfo } from "../interfaces/IAuthorInfo";
 
 export const addplaylist:ICommand =  {
     name: 'addplaylist',
@@ -28,12 +30,10 @@ export const addplaylist:ICommand =  {
             return;
         }
 
+        let list:ytpl.Result;
         try {
-            let list = await ytpl(id);
-
-            message.reply(JSON.stringify(list.items[0]));
-
-            console.log('list: ', list);
+            
+            list = await ytpl(id);
         }
         catch(err) {
             console.error(err);
@@ -41,9 +41,43 @@ export const addplaylist:ICommand =  {
             return;
         }
 
-        let count = await processPlaylist(id, message);
+        if (list.items.length === 0) {
+        
+            console.log('no videos')
+            await message.reply('No videos found within playlist.');
+            return;
+        
+        } 
+        
+        let count:number = 0;
+        for (let i = 0; i < list.items.length; i++) {
+            let info:yt.videoInfo;
 
+            const videoId = list.items[i].id;
+            const videoUrl:string = list.items[i].shortUrl; // `https://www.youtube.com/watch?v=${videoId}`;
+            
+            // try {
+            //     info = await yt.getInfo(videoUrl);
+            // }
+            // catch(err) {
+            //     console.error(err);
+            //     await message.reply(`Failed to get information about YouTube link ${videoUrl}: ${err}`);
+            //     continue;
+            // }
+
+            count++;
+            if (!SongQueueArrayInst[message.guild.id]) SongQueueArrayInst[message.guild.id] = new SongQueue();
+
+            let playlistAuthorInfo:IAuthorInfo = {name: list.author.name, url: list.author.url};
+            let playlistInfo:IPlaylistInfo = {id: list.id, url: list.url, title: list.title, thumbnail: list.bestThumbnail.url, author: playlistAuthorInfo};
+
+            SongQueueArrayInst[message.guild.id].songs.push({url: videoUrl, title: info.videoDetails.title, requester: message.author.username, videoId: info.videoDetails.videoId, length: parseFloat(info.videoDetails.lengthSeconds), playlistInfo});
+            await message.channel.send(`${message.author.username} just added **${info.videoDetails.title}** to the queue via a playlist`);
+        }
+
+        //let count = await processPlaylist(id, message);
         message.reply(`You added a total of ${count} songs to the queue`);
+
     }
 }
 
@@ -97,7 +131,10 @@ async function processPlaylist(id: string, message:Message): Promise<number> {
 
                 count++;
                 if (!SongQueueArrayInst[message.guild.id]) SongQueueArrayInst[message.guild.id] = new SongQueue();
-                SongQueueArrayInst[message.guild.id].songs.push({url: videoUrl, title: info.videoDetails.title, requester: message.author.username, videoId: info.videoDetails.videoId, length: parseFloat(info.videoDetails.lengthSeconds)});
+
+                let playlistInfo:IPlaylistInfo = {id: "", url: "", title: "", thumbnail: "", author: null};
+
+                SongQueueArrayInst[message.guild.id].songs.push({url: videoUrl, title: info.videoDetails.title, requester: message.author.username, videoId: info.videoDetails.videoId, length: parseFloat(info.videoDetails.lengthSeconds), playlistInfo});
                 await message.channel.send(`${message.author.username} just added **${info.videoDetails.title}** to the queue via a playlist`);
             }
         
