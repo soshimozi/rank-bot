@@ -71,7 +71,7 @@ export const addplaylist:ICommand =  {
 
                     count++;
                     if (!SongQueueArrayInst[message.guild.id]) SongQueueArrayInst[message.guild.id] = new SongQueue();
-                    SongQueueArrayInst[message.guild.id].songs.push({url: videoUrl, title: info.videoDetails.title, requester: message.author.username, videoId: info.videoDetails.videoId});
+                    SongQueueArrayInst[message.guild.id].songs.push({url: videoUrl, title: info.videoDetails.title, requester: message.author.username, videoId: info.videoDetails.videoId, length: parseFloat(info.videoDetails.lengthSeconds)});
                     await message.channel.send(`${message.author.username} just added **${info.videoDetails.title}** to the queue via a playlist`);
                 }
             

@@ -30,13 +30,9 @@ export const play:ICommand = {
             await message.reply('You are already playing.');
             return;
         } 
-        
-        let song = SongQueueArrayInst[message.guild.id].songs.shift();
 
         async function playSong(song:ISongInfo, message:Message) {
 
-            console.log('song: ', song);
-            
             if (song === undefined) {
                 await message.channel.send('Queue is empty');
                 SongQueueArrayInst[message.guild.id].playing = false;
@@ -61,17 +57,21 @@ export const play:ICommand = {
                 return;
             } 
     
+            // get the dispatcher and set state for this song
             const dispatcher = message.guild.voice.connection.play(yt(song.url, { filter: "audioonly" }));
             SongQueueArrayInst[message.guild.id].dispatcher = dispatcher;
             SongQueueArrayInst[message.guild.id].playing = true;
-
+            SongQueueArrayInst[message.guild.id].currentVideoLength = song.length;
+            
             dispatcher.setVolume(SongQueueArrayInst[message.guild.id].volume / 10);
 
+            // end any collection currently going on
             if(SongQueueArrayInst[message.guild.id].collector && !SongQueueArrayInst[message.guild.id].collector.ended) {
                 SongQueueArrayInst[message.guild.id].collector.stop();
                 SongQueueArrayInst[message.guild.id].collector = null;
             }
 
+            // we only care about !skip messages
             const messageFilter = response => {
                 return response.content.toLowerCase() == `${process.env.PREFIX}skip`;
             };
@@ -94,6 +94,8 @@ export const play:ICommand = {
 
                 let song = SongQueueArrayInst[message.guild.id].songs.shift();
                 await playSong(song, message);
+
+                dispatcher.destroy();
             });
 
             let embed = {
@@ -136,6 +138,7 @@ export const play:ICommand = {
             await message.channel.send({embed});
         }
 
+        let song = SongQueueArrayInst[message.guild.id].songs.shift();
         await playSong(song, message);
     }
 }

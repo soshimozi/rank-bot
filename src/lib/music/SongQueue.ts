@@ -7,4 +7,6 @@ export class SongQueue implements ISongQueue {
     paused: boolean = false;
     dispatcher = null;
     volume = 1;
+    currentVideoLength = 0;
+
 }

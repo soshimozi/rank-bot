@@ -10,7 +10,7 @@ export const time:ICommand =  {
             return;
         }
         
-        await message.reply(`Current stream time is ${SongQueueArrayInst[message.guild.id].dispatcher.streamTime}`);
+        await message.reply(`Current stream time is ${SongQueueArrayInst[message.guild.id].dispatcher.streamTime}, total time is ${SongQueueArrayInst[message.guild.id].currentVideoLength}`);
 
     }
 }

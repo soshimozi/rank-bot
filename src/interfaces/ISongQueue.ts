@@ -9,4 +9,5 @@ export interface ISongQueue {
     dispatcher?: StreamDispatcher;
     collector?: MessageCollector;
     volume:number;
+    currentVideoLength: number;
 }

@@ -12,6 +12,8 @@ export const apod:ICommand =  {
 
         if(parameters.length > 0 && parameters[0].toLowerCase() === 'random') {
             queryDate = randomDate(new Date(1998, 0, 1), new Date());
+        } else if(parameters.length > 0) {
+            queryDate = parameters[0];
         }
 
         const apod_client = axios.create({

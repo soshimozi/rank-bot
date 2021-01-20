@@ -31,8 +31,9 @@ export const addsong:ICommand = {
             await message.reply(`Failed to get information about YouTube link ${url}: ${err}`);
         }
 
+
         if (!SongQueueArrayInst[message.guild.id]) SongQueueArrayInst[message.guild.id] = new SongQueue();
-        SongQueueArrayInst[message.guild.id].songs.push({url: url, title: info.videoDetails.title, requester: message.author.username, videoId: info.videoDetails.videoId});
+        SongQueueArrayInst[message.guild.id].songs.push({url: url, title: info.videoDetails.title, requester: message.author.username, videoId: info.videoDetails.videoId, length: parseFloat(info.videoDetails.lengthSeconds)});
         await message.channel.send(`${message.author.username} just added **${info.videoDetails.title}** to the queue`);
     }
 }
