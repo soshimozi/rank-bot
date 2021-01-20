@@ -106,7 +106,7 @@ export const play:ICommand = {
 
             let embed = {
                 title: ' ',
-                color: 0x2196f3,
+                color: 0xcc0066,
                 author: {
                 name: `Now Playing: ${song.title}`,
                 icon_url: `https://img.youtube.com/vi/${song.videoId}/hqdefault.jpg`
@@ -136,7 +136,7 @@ export const play:ICommand = {
                 embed.fields.push({
                     name: 'Playlist Title',
                     value: song.playlistInfo.title,
-                    inline: true
+                    inline: false
                 });
 
                 embed.fields.push({
