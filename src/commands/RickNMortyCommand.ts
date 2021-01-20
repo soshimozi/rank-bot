@@ -1,3 +1,4 @@
+import axios from "axios";
 import { Client, Message } from "discord.js";
 import { ICommand } from "../interfaces/ICommand";
 
@@ -14,8 +15,6 @@ export const ricknmorty:ICommand =  {
         const apod_client = axios.create({
             baseURL: 'https://api.nasa.gov/planetary'
         });
-
-
     }
 }
 
