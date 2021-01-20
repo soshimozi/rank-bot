@@ -133,10 +133,12 @@ export const play:ICommand = {
   
             if(song.playlistInfo) {
 
+                embed.fields.push({name: '\u200B', value: '\u200B', inline: false})
+
                 embed.fields.push({
                     name: 'Playlist Title',
                     value: song.playlistInfo.title,
-                    inline: false
+                    inline: true
                 });
 
                 embed.fields.push({
