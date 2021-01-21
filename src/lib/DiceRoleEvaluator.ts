@@ -1,4 +1,5 @@
 import crypto from "crypto";
+import { randomInt } from "./Utils";
 
 export default class DiceRollEvaluator {
 
@@ -14,12 +15,12 @@ export default class DiceRollEvaluator {
         rng_min = parseInt(rng_min) || 0;
         rng_max = Math.max(parseInt(rng_max), rng_min) || rng_min;
 
-        delta = (rng_max - rng_min + 1);
+        // delta = (rng_max - rng_min + 1);
 
-        value = crypto.randomInt(0, delta);
-        value = parseInt(value);
+        // value = crypto.randomInt(0, delta);
+        // value = parseInt(value);
 
-        return value + rng_min;
+        return randomInt(rng_min, rng_max);
     }
 
     static evaluateRoll(str: string): number {
@@ -49,14 +50,18 @@ export default class DiceRollEvaluator {
         }
 
         dice = parseInt(dice);
+
+        if (dice < 1) throw new Error("INVALID STRING");
+        if (qta === '0') throw new Error("INVALID STRING");
+    
         mod_opts = mod_opts || "";
         mod = parseInt(mod) || 0;
         qta = parseInt(qta) || 1;
         max = Math.max(parseInt(max), qta) || qta;
 
         for(let val; max--;) {
-            val = crypto.randomInt(0, dice);
-            val = Math.floor(val) + 1;
+            val = crypto.randomInt(1, dice+1);
+            //val = Math.floor(val) + 1;
             rolls.push(val);
         }
 
