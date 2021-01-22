@@ -8,7 +8,7 @@ const bot = new Bot();
 const main = async() => {
 
     try {
-        await sequelize.sync({force: false});
+        await sequelize.sync({force: true});
         console.info('Database initialized');
     }
     catch(err) {

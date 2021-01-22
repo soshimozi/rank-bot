@@ -6,7 +6,7 @@ export class Configuration extends Model<Configuration> {
     @Column
     guildId: string;
 
-    @Unique
+    @PrimaryKey
     @Column
     key: string
 

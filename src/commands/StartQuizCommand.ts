@@ -14,6 +14,15 @@ export const startquiz:ICommand =  {
     name: 'startquiz',
     handler: async (client: Client, message:Message, ...parameters: string[]):Promise<void> => {
 
+        let difficulty = 1;
+        if(parameters.length > 0) {
+            if(parameters[0].toLowerCase() === 'medium') {
+                difficulty = 2
+            } else if(parameters[0].toLowerCase() === 'hard') {
+                difficulty = 3
+            }
+        }
+
         if(BotState[message.guild.id] && BotState[message.guild.id].currentQuiz) {
             await message.reply('there is already a quiz running.  Please wait until that quiz is complete.');
             return;
@@ -24,7 +33,7 @@ export const startquiz:ICommand =  {
         }
 
         BotState[message.guild.id].currentQuiz = true;
-        let result = await QuizManager.startQuiz(client, message, 10, 2.5);
+        let result = await QuizManager.startQuiz(client, message, 30/difficulty, difficulty);
         BotState[message.guild.id].currentQuiz = false;
 
         if(result.winner) {

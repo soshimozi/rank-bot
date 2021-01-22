@@ -3,6 +3,7 @@ import { Client, Message, MessageAttachment, User } from "discord.js";
 import { decode } from "html-entities";
 import { Op } from "sequelize";
 import { Quiz } from "../../models/Quiz";
+import { ConfigurationManager } from "./ConfigurationManager";
 const _ = require('underscore');
 
 export interface IQuiz {
@@ -65,9 +66,14 @@ export class QuizManager {
     }
 
     static async startQuiz(client: Client, message: Message, quizTime: number = 30, difficultyFactor:number = 1.0): Promise<IQuizResult> {
+
+        var config = await ConfigurationManager.getConfiguration(message.guild.id);
+
+        console.log('config: ', config);
+        
         //TODO: make configurable
-        const MAX_DAILY_QUIZES:number = 30;
-        const MAX_USER_DAILY_QUIZES:number = 10;
+        const MAX_DAILY_QUIZES:number = parseInt(config.maxDailyQuizzes) || 40;
+        const MAX_USER_DAILY_QUIZES:number = parseInt(config.maxUserDailyQuizzes) || 20;
 
         //TODO: make configurable
         const pointsMap = {easy : 200 * difficultyFactor, medium: 400 * difficultyFactor, hard: 800 * difficultyFactor };
