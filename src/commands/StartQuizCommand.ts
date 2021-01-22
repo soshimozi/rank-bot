@@ -19,6 +19,10 @@ export const startquiz:ICommand =  {
             return;
         }
 
+        if(!BotState[message.guild.id]) {
+            BotState[message.guild.id] = {};
+        }
+
         BotState[message.guild.id].currentQuiz = true;
         let result = await QuizManager.startQuiz(client, message, 10, 2.5);
         BotState[message.guild.id].currentQuiz = false;

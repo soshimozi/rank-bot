@@ -1,5 +1,5 @@
 interface IBotState {
-    currentQuiz: boolean
+    currentQuiz?: boolean
 }
 
 interface IBotStateCollection {
