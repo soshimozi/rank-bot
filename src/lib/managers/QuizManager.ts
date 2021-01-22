@@ -54,7 +54,6 @@ export class QuizManager {
         });
     }
 
-
     static async getRandomQuiz():Promise<any> {
         const quizUrl = "https://opentdb.com/api.php?amount=1";
 
