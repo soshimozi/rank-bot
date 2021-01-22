@@ -78,9 +78,6 @@ export class QuizManager {
         //TODO: make configurable
         const pointsMap = {easy : 200 * difficultyFactor, medium: 400 * difficultyFactor, hard: 800 * difficultyFactor };
 
-        // TODO: look into possibly making this configurable
-        //const quizIcon = new MessageAttachment('../assets/img/icon-2425861_640.png');
-
         const markdownHighlight = "```";
 
         let todayQuizes = await QuizManager.getCompletedQuizesForToday(message.guild.id);

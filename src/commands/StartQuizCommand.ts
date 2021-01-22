@@ -37,6 +37,9 @@ export const startquiz:ICommand =  {
         BotState[message.guild.id].currentQuiz = false;
 
         if(result.winner) {
+
+            console.log(result.winner);
+            
             await message.channel.send(`${result.winner.username} got the correct answer and received ${result.winningAmount} points!`);
 
             await UserStatManager.addUserQuizPoints(result.winner, message.guild, result.winningAmount);
