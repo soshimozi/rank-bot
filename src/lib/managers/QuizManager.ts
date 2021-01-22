@@ -73,7 +73,7 @@ export class QuizManager {
         
         //TODO: make configurable
         const MAX_DAILY_QUIZES:number = parseInt(config.maxDailyQuizzes) || 40;
-        const MAX_USER_DAILY_QUIZES:number = parseInt(config.maxUserDailyQuizzes) || 20;
+        const MAX_USER_DAILY_QUIZES:number = parseInt(config.maxDailyUserQuizzes) || 20;
 
         //TODO: make configurable
         const pointsMap = {easy : 200 * difficultyFactor, medium: 400 * difficultyFactor, hard: 800 * difficultyFactor };
