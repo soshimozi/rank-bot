@@ -20,8 +20,9 @@ import { purgequeue } from "../commands/PurgeQueueCommand";
 import { chucknorris } from "../commands/ChuckNorrisCommand";
 import { xkcd } from "../commands/XKCDCommand";
 import { rolldice } from "../commands/RollDiceCommand";
+import { startquiz } from "../commands/StartQuizCommand";
 
 export const CommandList:ICommand[] = 
         [help, rank, leaderboard, addreward, testnodecanvas, addbadge, apod, 
-        time, repeat, purgequeue, chucknorris, xkcd, rolldice,
+        time, repeat, purgequeue, chucknorris, xkcd, rolldice, startquiz,
         join, addsong, play, pause, resume, volume, showqueue, addplaylist];

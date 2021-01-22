@@ -49,6 +49,10 @@ export const addplaylist:ICommand =  {
         
         } 
         
+        await message.reply('please wait while I add those songs to the queue for you.');
+
+        let videosAdded:ytpl.Item[] = [];
+
         let count:number = 0;
         for (let i = 0; i < list.items.length; i++) {
             let info:ytpl.Item;
@@ -77,13 +81,14 @@ export const addplaylist:ICommand =  {
             let playlistInfo:IPlaylistInfo = {id: list.id, url: list.url, title: list.title, thumbnail: list.bestThumbnail.url, author: playlistAuthorInfo};
 
             SongQueueArrayInst[message.guild.id].songs.push({url, title: info.title, requester: message.author.username, videoId, length: info.durationSec, playlistInfo});
-            await message.channel.send(`${message.author.username} just added **${info.title}** to the queue via a playlist`);
+            //await message.channel.send(`${message.author.username} just added **${info.title}** to the queue via a playlist`);
+            videosAdded.push(info)
 
             count++;
         }
 
         //let count = await processPlaylist(id, message);
-        message.reply(`You added a total of ${count} songs to the queue`);
+        message.reply(`you added a total of ${count} songs to the queue`);
 
     }
 }
@@ -121,6 +126,8 @@ async function processPlaylist(id: string, message:Message): Promise<number> {
         
         } else {
         
+            let videosAdded:yt.videoInfo[] = [];
+
             for (let i = 0; i < data.items.length; i++) {
                 let info:yt.videoInfo;
 
@@ -142,7 +149,8 @@ async function processPlaylist(id: string, message:Message): Promise<number> {
                 let playlistInfo:IPlaylistInfo = {id: "", url: "", title: "", thumbnail: "", author: null};
 
                 SongQueueArrayInst[message.guild.id].songs.push({url: videoUrl, title: info.videoDetails.title, requester: message.author.username, videoId: info.videoDetails.videoId, length: parseFloat(info.videoDetails.lengthSeconds), playlistInfo});
-                await message.channel.send(`${message.author.username} just added **${info.videoDetails.title}** to the queue via a playlist`);
+                //await message.channel.send(`${message.author.username} just added **${info.videoDetails.title}** to the queue via a playlist`);
+                videosAdded.push(info)
             }
         
             nextPageToken = data.nextPageToken;

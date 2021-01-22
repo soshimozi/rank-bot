@@ -3,7 +3,7 @@ import { ICommand } from "../interfaces/ICommand";
 import { SongQueueArrayInst } from "../lib/music/SongQueueArray";
 import yt = require('ytdl-core');
 import { ISongInfo } from "../interfaces/ISongInfo";
-import { setDefaultBotStatus } from "../lib/Utils";
+import { numPad, setDefaultBotStatus } from "../lib/Utils";
 
 export const play:ICommand = {
     name: 'play',
@@ -104,20 +104,31 @@ export const play:ICommand = {
                 dispatcher.destroy();
             });
 
+            let description = `${"```"}md\nNow Playing\n---\n${song.title}`;
+
+            if(song.playlistInfo) {
+                description = `${description}\nplaylist: [${song.playlistInfo.title}]`;
+            }
+
+            //console.log(song.length);
+
+            const minutes = Math.floor(song.length / 60);
+            var seconds = song.length - minutes * 60;
+
+            description += "```";
+            
             let embed = {
                 title: ' ',
                 color: 0xcc0066,
-                author: {
-                name: `Now Playing: ${song.title}`,
-                icon_url: `https://img.youtube.com/vi/${song.videoId}/hqdefault.jpg`
-                },
-                thumbnail: {
-                url: `https://img.youtube.com/vi/${song.videoId}/hqdefault.jpg`
-                },
+                description,  
+                timestamp: new Date(),
+                // image: {
+                //     url: `https://img.youtube.com/vi/${song.videoId}/hqdefault.jpg`
+                // },
                 fields: [
                 {
-                    name: 'Link',
-                    value: `[Click Here](https://www.youtube.com/watch?v=${song.videoId})`,
+                    name: 'Length',
+                    value: `${numPad(minutes, 2)}:${numPad(seconds, 2)}`,
                     inline: true
                 },
                 {
@@ -127,25 +138,8 @@ export const play:ICommand = {
                 }
                 ],
                 footer: {
-                text: 'Brought to you by BitwiseMobile Productions [www.bitwisemobile.com] and, of course, Caffeine.  Inspired by the greatest son in the world, Daniel.'
+                    text: 'Brought to you by BitwiseMobile Productions [www.bitwisemobile.com] and, of course, Caffeine.  Inspired by the greatest son in the world, Daniel.',
                 }
-            }
-  
-            if(song.playlistInfo) {
-
-                embed.fields.push({name: '\u200B', value: '\u200B', inline: false})
-
-                embed.fields.push({
-                    name: 'Playlist Title',
-                    value: song.playlistInfo.title,
-                    inline: true
-                });
-
-                embed.fields.push({
-                    name: 'Playlist Url',
-                    value: song.playlistInfo.url,
-                    inline: true
-                });
             }
 
             if(SongQueueArrayInst[message.guild.id].songs.length > 0) {

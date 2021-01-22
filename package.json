@@ -26,6 +26,7 @@
     "discord-canvas": "^1.4.1",
     "discord.js": "^12.5.1",
     "dotenv": "^8.2.0",
+    "html-entities": "^2.0.2",
     "inversify": "^5.0.5",
     "lru-cache": "^6.0.0",
     "moment": "^2.29.1",

@@ -21,6 +21,9 @@ export class UserStat extends Model<UserStat> {
     voiceTime: number;
 
     @Column(DataType.BIGINT)
+    totalQuizPoints: number;
+
+    @Column(DataType.BIGINT)
     reactionCount: number;
 
 }

@@ -47,6 +47,8 @@ export class LevelManager {
         await level.save();
 
         if(oldLevel != newLevel) {
+            message.reply(`congratulations on reaching level ${newLevel}!`);
+
             await LevelManager._updateUserRoles(member, message);
         }
     }

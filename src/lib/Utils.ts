@@ -47,6 +47,11 @@ const generateEmbed = (message:Message, title:string, description?:string) : Mes
     });
 }
 
+export const numPad = (num, size) => {
+    num = num.toString();
+    while (num.length < size) num = "0" + num;
+    return num;
+}
 
 /**
  * Gets variables and types

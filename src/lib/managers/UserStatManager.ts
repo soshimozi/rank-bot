@@ -35,6 +35,13 @@ export class UserStatManager {
         await userStat.save();
     }
 
+    static async addUserQuizPoints(user: User, guild: Guild, amount: number): Promise<void> {
+        let [userStat, created] = await this._getUserStat(user.id, guild.id);
+
+        userStat.totalQuizPoints += amount;
+        await userStat.save();
+    }
+
 
     private static async _getUserStat(userId: string, guildId: string): Promise<[UserStat, boolean]> {
         
