@@ -1,9 +1,8 @@
 import axios from "axios";
-import { Client, Message, MessageAttachment, User } from "discord.js";
+import { Client, Message, User } from "discord.js";
 import { decode } from "html-entities";
 import { Op } from "sequelize";
 import { Quiz } from "../../models/Quiz";
-import { ConfigurationManager } from "./ConfigurationManager";
 const _ = require('underscore');
 
 export interface IQuiz {
@@ -67,33 +66,11 @@ export class QuizManager {
 
     static async startQuiz(client: Client, message: Message, quizTime: number = 30, difficultyFactor:number = 1.0): Promise<IQuizResult> {
 
-        var config = await ConfigurationManager.getConfiguration(message.guild.id);
-
-        console.log('config: ', config);
-        
-        //TODO: make configurable
-        const MAX_DAILY_QUIZES:number = parseInt(config.maxDailyQuizzes) || 40;
-        const MAX_USER_DAILY_QUIZES:number = parseInt(config.maxDailyUserQuizzes) || 20;
-
         //TODO: make configurable
         const pointsMap = {easy : 200 * difficultyFactor, medium: 400 * difficultyFactor, hard: 800 * difficultyFactor };
 
         const markdownHighlight = "```";
 
-        let todayQuizes = await QuizManager.getCompletedQuizesForToday(message.guild.id);
-
-        // // TODO: move into configuration database
-        if(todayQuizes.length >= MAX_DAILY_QUIZES) {
-             await message.reply("there have been too many quizes already today.  Please try again tomorrow.");
-             return;
-        }
-
-        let userQuizes = await QuizManager.getCompletedQuizesForUser(message.author.id, message.guild.id);
-        if(userQuizes.length >= MAX_USER_DAILY_QUIZES) {
-            await message.reply("you have already started enough quizes today.  Please give someone else a try.  You can try again tomorrow.")
-            return;
-        }
-        
         const quiz:IQuiz = await QuizManager.getRandomQuiz();
 
         let answers = [];

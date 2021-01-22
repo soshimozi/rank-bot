@@ -6,6 +6,7 @@ import {decode} from 'html-entities';
 import { Quiz } from "../models/Quiz";
 import { BotState } from "../lib/BotState";
 import { UserStatManager } from "../lib/managers/UserStatManager";
+import { ConfigurationManager } from "../lib/managers/ConfigurationManager";
 
 
 const markdownHighlight = "```";
@@ -32,8 +33,25 @@ export const startquiz:ICommand =  {
             BotState[message.guild.id] = {};
         }
 
+        const config = await ConfigurationManager.getConfiguration(message.guild.id);
+
+        const MAX_DAILY_QUIZES:number = parseInt(config.maxDailyQuizzes) || 40;
+        const MAX_USER_DAILY_QUIZES:number = parseInt(config.maxDailyUserQuizzes) || 20;
+
+        const todayQuizes = await QuizManager.getCompletedQuizesForToday(message.guild.id);
+        if(todayQuizes.length >= MAX_DAILY_QUIZES) {
+             await message.reply("there have been too many quizes already today.  Please try again tomorrow.");
+             return;
+        }
+
+        const userQuizes = await QuizManager.getCompletedQuizesForUser(message.author.id, message.guild.id);
+        if(userQuizes.length >= MAX_USER_DAILY_QUIZES) {
+            await message.reply("you have already started enough quizes today.  Please give someone else a try.  You can try again tomorrow.")
+            return;
+        }
+
         BotState[message.guild.id].currentQuiz = true;
-        let result = await QuizManager.startQuiz(client, message, 30/difficulty, difficulty);
+        const result = await QuizManager.startQuiz(client, message, 30/difficulty, difficulty);
         BotState[message.guild.id].currentQuiz = false;
 
         if(result.winner) {
