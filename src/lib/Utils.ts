@@ -35,6 +35,12 @@ export const generateSuccessEmbed = (message:Message, title:string, description?
 //     return this.generateEmbed(message, title, description).setColor(0x389ed9);
 // }
 
+const markdownHighlight = "```";
+
+export const wrapWithMarkown = (str: string, lang: string): string => {
+    return `${markdownHighlight}${lang}\n${str}\n${markdownHighlight}`;
+}
+
 const generateEmbed = (message:Message, title:string, description?:string) : MessageEmbed => {
     return new MessageEmbed({
         title: title,

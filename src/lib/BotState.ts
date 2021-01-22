@@ -1,3 +1,9 @@
-export const BotState = {
-    currentQuiz: null
+interface IBotState {
+    currentQuiz: boolean
 }
+
+interface IBotStateCollection {
+    [name: string]: IBotState
+}
+
+export const BotState:IBotStateCollection = {};

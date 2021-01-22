@@ -26,71 +26,9 @@ export default class Bot {
         this.client.on('voiceStateUpdate', async(oldState: VoiceState, newState: VoiceState) => {});
 
         this.client.on('ready', async () => { 
-            //await this.client.user.setActivity(`HAL-9000 | You may call me Hal`, {type:"CUSTOM_STATUS"})
             setDefaultBotStatus(this.client);
         });
 
-        //let secret = await this.getToken();
-        //let parsed = JSON.parse(secret);
         return await this.client.login(process.env.DISCORDBOTKEY);
-    }
-
-    async getToken(): Promise<string> {
-        // get token from secrets manager
-        const  region = "us-west-2",
-        secretName = "hal-9000-bot/config";
-
-        // Create a Secrets Manager client
-        var client = new AWS.SecretsManager({
-            region: region
-        });        
-
-        return new Promise((resolve, reject) => {
-
-            console.log('about to call getSecretValue from client');
-
-            client.getSecretValue({SecretId: secretName}, function(err, data) {
-
-                console.log('received a response');
-
-                if (err) {
-
-                    console.error(err);
-
-                    if (err.code === 'DecryptionFailureException') {
-                        // Secrets Manager can't decrypt the protected secret text using the provided KMS key.
-                        // Deal with the exception here, and/or rethrow at your discretion.
-                        reject(err);
-                    }
-                    else if (err.code === 'InternalServiceErrorException') {
-                        // An error occurred on the server side.
-                        // Deal with the exception here, and/or rethrow at your discretion.
-                        reject(err);
-                    }
-                    else if (err.code === 'InvalidParameterException')
-                        // You provided an invalid value for a parameter.
-                        // Deal with the exception here, and/or rethrow at your discretion.
-                        reject(err);
-                    else if (err.code === 'InvalidRequestException')
-                        // You provided a parameter value that is not valid for the current state of the resource.
-                        // Deal with the exception here, and/or rethrow at your discretion.
-                        reject(err);
-                    else if (err.code === 'ResourceNotFoundException')
-                        // We can't find the resource that you asked for.
-                        // Deal with the exception here, and/or rethrow at your discretion.
-                        reject(err);
-                }
-                else {
-                    // Decrypts secret using the associated KMS CMK.
-                    // Depending on whether the secret is a string or binary, one of these fields will be populated.
-                    if ('SecretString' in data) {
-                        resolve(data.SecretString);
-                    } else {
-                        let buff = Buffer.from(data.SecretBinary, 'base64');
-                        resolve(buff.toString('ascii'));
-                    }
-                }
-            });
-        });
     }
 }

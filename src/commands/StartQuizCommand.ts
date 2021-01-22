@@ -14,14 +14,14 @@ export const startquiz:ICommand =  {
     name: 'startquiz',
     handler: async (client: Client, message:Message, ...parameters: string[]):Promise<void> => {
 
-        if(BotState[message.guild.id].currentQuiz) {
+        if(BotState[message.guild.id] && BotState[message.guild.id].currentQuiz) {
             await message.reply('there is already a quiz running.  Please wait until that quiz is complete.');
             return;
         }
 
-        BotState.currentQuiz = true;
+        BotState[message.guild.id].currentQuiz = true;
         let result = await QuizManager.startQuiz(client, message, 10, 2.5);
-        BotState.currentQuiz = false;
+        BotState[message.guild.id].currentQuiz = false;
 
         if(result.winner) {
             await message.channel.send(`${result.winner.username} got the correct answer and received ${result.winningAmount} points!`);
