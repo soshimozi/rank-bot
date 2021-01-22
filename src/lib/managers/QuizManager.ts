@@ -66,8 +66,8 @@ export class QuizManager {
 
     static async startQuiz(client: Client, message: Message, quizTime: number = 30, difficultyFactor:number = 1.0): Promise<IQuizResult> {
         //TODO: make configurable
-        const MAX_DAILY_QUIZES:number = 20;
-        const MAX_USER_DAILY_QUIZES:number = 4;
+        const MAX_DAILY_QUIZES:number = 30;
+        const MAX_USER_DAILY_QUIZES:number = 10;
 
         //TODO: make configurable
         const pointsMap = {easy : 200 * difficultyFactor, medium: 400 * difficultyFactor, hard: 800 * difficultyFactor };
