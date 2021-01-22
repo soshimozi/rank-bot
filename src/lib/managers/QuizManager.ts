@@ -73,7 +73,7 @@ export class QuizManager {
         const pointsMap = {easy : 200 * difficultyFactor, medium: 400 * difficultyFactor, hard: 800 * difficultyFactor };
 
         // TODO: look into possibly making this configurable
-        const quizIcon = new MessageAttachment('../assets/img/icon-2425861_640.png');
+        //const quizIcon = new MessageAttachment('../assets/img/icon-2425861_640.png');
 
         const markdownHighlight = "```";
 
@@ -115,7 +115,7 @@ export class QuizManager {
         let embed = {
             author: {
                 name: "Quizinator",
-                icon_url: 'attachment://icon-2425861_640.png'
+                icon_url: 'https://hal-9000-bot-images.s3-us-west-2.amazonaws.com/icon-2425861_640.png'
             },
             color: 0x08000ff,
             description: description,
