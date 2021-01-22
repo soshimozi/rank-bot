@@ -14,7 +14,7 @@ export const startquiz:ICommand =  {
     name: 'startquiz',
     handler: async (client: Client, message:Message, ...parameters: string[]):Promise<void> => {
 
-        if(BotState.currentQuiz) {
+        if(BotState[message.guild.id].currentQuiz) {
             await message.reply('there is already a quiz running.  Please wait until that quiz is complete.');
             return;
         }
