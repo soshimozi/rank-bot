@@ -155,7 +155,7 @@ export class QuizManager {
             return answers[index - 1].isAnswer;
         }
 
-        await message.channel.send({files: [quizIcon], embed});
+        await message.channel.send({embed});
         await message.channel.send(`Only your first answer will be selected and you have ${quizTime} seconds to answer.`);
 
         let winner = null;
