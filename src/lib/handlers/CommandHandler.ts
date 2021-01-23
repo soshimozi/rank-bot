@@ -75,7 +75,7 @@ export const CommandHandler:ICommandHandler = async (err: unknown,
 
 
     // TODO: add setting to display this message or not
-    message.channel.send(`I am sorry, but \`${commandName}\` is not a valid command.`);
+    await message.channel.send(`I am sorry, but \`${commandName}\` is not a valid command.`);
 
 };
 
@@ -100,7 +100,7 @@ const checkForRandomEncounters = async (client:Client, message:Message) => {
     const randomIndex = randomInt(0, pokemonList.results.length);
     const pokemonListItem = pokemonList.results[randomIndex];
 
-    const markdown =  wrapWithMarkown(`A [${pokemonListItem.name.toUpperCase()}] has appeard in the wild!  Look for it in the #${randomChannel.name} channel!`, 'css');
+    const markdown = wrapWithMarkown(`A [${pokemonListItem.name.toUpperCase()}] has appeard in the wild!  Look for it in the #${randomChannel.name} channel!`, 'css');
     await message.channel.send(markdown);
 
     const pokemonInfo = await PokemonManager.getPokemonInfo(pokemonListItem.name);
@@ -126,7 +126,7 @@ const checkForRandomEncounters = async (client:Client, message:Message) => {
         }
     }
 
-    randomChannel.send({embed});
+    await randomChannel.send({embed});
 
     let userTries = {};
     const filter = async response => {
@@ -153,7 +153,7 @@ const checkForRandomEncounters = async (client:Client, message:Message) => {
              return true;
          }
 
-         randomChannel.send(`Sorry ${response.author}, but you failed to catch the ${pokemonInfo.name} this time!`);
+         await randomChannel.send(`Sorry ${response.author}, but you failed to catch the ${pokemonInfo.name} this time!`);
          return false;
     }
 
@@ -161,16 +161,15 @@ const checkForRandomEncounters = async (client:Client, message:Message) => {
     let winningAmount = 0;
 
     try {
-        var collected = await randomChannel.awaitMessages(filter, { max: 1, time: 60000, errors: ['time']})
+        let collected = await randomChannel.awaitMessages(filter, { max: 1, time: 60000, errors: ['time']})
         winner = collected.first().author;
-        //winningAmount = pointsMap[quiz.difficulty];
     }
     catch(err) {
-        randomChannel.send(`It looks like nobody caught the ${pokemonInfo.name} this time!`);
+        await randomChannel.send(`It looks like nobody caught the ${pokemonInfo.name} this time!`);
     }
 
     if(winner !== null) {
-        randomChannel.send(`${winner} caught the ${pokemonInfo.name} for ${pokemonInfo.base_experience} points! `)
+        await randomChannel.send(`${winner} caught the ${pokemonInfo.name} for ${pokemonInfo.base_experience} points! `)
     }
 }
 
