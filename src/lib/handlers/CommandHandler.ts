@@ -95,7 +95,7 @@ const checkForRandomEncounters = async (client:Client, message:Message) => {
     // get a random channel
     const randomChannel = message.guild.channels.cache.filter( (c) => c.type === 'text').random() as TextChannel;
 
-    const pokemonList = await PokemonManager.getPokemonList(0, 180);
+    const pokemonList = await PokemonManager.getPokemonList(0, 151);
 
     const randomIndex = randomInt(0, pokemonList.results.length);
     const pokemonListItem = pokemonList.results[randomIndex];
