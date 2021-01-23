@@ -1,9 +1,14 @@
-import { Client, Message } from "discord.js";
+import { Client, Message, TextChannel } from "discord.js";
 import { ICommandHandler } from "../../interfaces/ICommandHandler";
+import { BotState } from "../BotState";
 import { CommandList } from "../CommandList";
+import { BotStateManager } from "../managers/BotStateManager";
 import { LevelManager } from '../managers/LevelManager';
+import { PokemonManager } from "../managers/PokemonManager";
 import { UserStatManager } from "../managers/UserStatManager";
-import { randomInt } from "../Utils";
+import { randomInt, wrapWithMarkown } from "../Utils";
+const moment = require("moment");
+const _ = require('underscore');
 
 export const CommandHandler:ICommandHandler = async (err: unknown,
     client: Client,
@@ -23,6 +28,8 @@ export const CommandHandler:ICommandHandler = async (err: unknown,
     await LevelManager.giveGuildUserExp(message.guild.member(message.author.id), message);
     await UserStatManager.addUserMessage(message.author, message.guild);
 
+    await checkForRandomEncounters(client, message);
+
     // check if there are dargins in the message
     if(darginsBeHere(message)) {
         return;
@@ -40,7 +47,7 @@ export const CommandHandler:ICommandHandler = async (err: unknown,
     }
 
     // music player messgaes handled by player
-    if(message.content.toLowerCase() === '!skip') return;
+    if(message.content.toLowerCase() === '!skip' || message.content.toLowerCase() === '!catch') return;
     
     // get rid of prefix
     const messageParts = message.content.split(" ");
@@ -71,6 +78,101 @@ export const CommandHandler:ICommandHandler = async (err: unknown,
     message.channel.send(`I am sorry, but \`${commandName}\` is not a valid command.`);
 
 };
+
+const checkForRandomEncounters = async (client:Client, message:Message) => {
+    
+    let botState = BotStateManager.getBotState(message.guild.id);
+    console.log('botState:', botState);
+
+    if(moment().diff(moment(botState.nextEncounter || new Date())) < 0)
+        return;
+
+    let timeout = randomInt(2, 6);
+    botState.nextEncounter = moment(botState.nextEncounter || new Date()).add(timeout, 'minutes');
+
+    botState.currentPokemon = true;
+
+    // get a random channel
+    const randomChannel = message.guild.channels.cache.filter( (c) => c.type === 'text').random() as TextChannel;
+
+    const pokemonList = await PokemonManager.getPokemonList(0, 180);
+
+    const randomIndex = randomInt(0, pokemonList.results.length);
+    const pokemonListItem = pokemonList.results[randomIndex];
+
+    const markdown =  wrapWithMarkown(`A [${pokemonListItem.name.toUpperCase()}] has appeard in the wild!  Look for it in the #${randomChannel.name} channel!`, 'css');
+    await message.channel.send(markdown);
+
+    const pokemonInfo = await PokemonManager.getPokemonInfo(pokemonListItem.name);
+    
+
+    let embed = {
+        title: `${pokemonInfo.name.toUpperCase()}`,
+        color: 0xffff66,
+        description: `A pokemon has appeared!  You can use the **!catch** command to catch it.`,
+        timestamp: new Date(),
+        thumbnail: {
+            url: `${pokemonInfo.sprites.front_default}`
+        },
+        fields: [
+            {
+                name: 'Points',
+                value: `${pokemonInfo.base_experience}`,
+                inline: false
+            }
+        ],
+        footer: {
+            text: 'Gotta catchem all!',
+        }
+    }
+
+    randomChannel.send({embed});
+
+    let userTries = {};
+    const filter = async response => {
+
+        if(response.content !== '!catch') {
+            return false;
+        }
+        
+        if(userTries[response.author.id]) {
+            // can't ask more than once
+            return false;
+        }
+
+        //set the flag
+        userTries[response.author.id] = true;
+
+        // TODO: measure probabilty based on difficulty
+        // also check against ball type which will be a parameter
+        // afterwards adjust ball count for each player who attempted
+        // for now no inventory and a flat rate of 33%
+
+         let attempt = randomInt(0, 100);
+         if(attempt <= 33) {
+             return true;
+         }
+
+         randomChannel.send(`Sorry ${response.author}, but you failed to catch the ${pokemonInfo.name} this time!`);
+         return false;
+    }
+
+    let winner = null;
+    let winningAmount = 0;
+
+    try {
+        var collected = await randomChannel.awaitMessages(filter, { max: 1, time: 60000, errors: ['time']})
+        winner = collected.first().author;
+        //winningAmount = pointsMap[quiz.difficulty];
+    }
+    catch(err) {
+        randomChannel.send(`It looks like nobody caught the ${pokemonInfo.name} this time!`);
+    }
+
+    if(winner !== null) {
+        randomChannel.send(`${winner} caught the ${pokemonInfo.name} for ${pokemonInfo.base_experience} points! `)
+    }
+}
 
 const giveHugs = (message: Message): boolean => {
     if (message.content.toLowerCase().startsWith('hug')) { 

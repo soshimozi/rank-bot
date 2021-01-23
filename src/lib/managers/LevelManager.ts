@@ -50,8 +50,6 @@ export class LevelManager {
             //message.reply(`congratulations on reaching level ${newLevel}!`);
 
             await message.channel.send({embed: generateSuccessEmbed(message, 'Level up!', `${member} just reached level ${newLevel}!`)});
-
-
             await LevelManager._updateUserRoles(member, message);
         }
     }

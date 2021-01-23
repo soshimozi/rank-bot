@@ -1,8 +1,10 @@
-interface IBotState {
-    currentQuiz?: boolean
+export interface IBotState {
+    currentQuiz?: boolean;
+    currentPokemon?: boolean;
+    nextEncounter?: Date;
 }
 
-interface IBotStateCollection {
+export interface IBotStateCollection {
     [name: string]: IBotState
 }
 

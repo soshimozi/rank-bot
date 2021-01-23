@@ -2,7 +2,7 @@ import { Client, Guild, Message,  MessageReaction, User, VoiceState } from "disc
 import {CommandHandler} from './handlers/CommandHandler';
 import { GuildCreateHandler } from "./handlers/GuildCreateHandler";
 import { ReactionHandler } from "./handlers/ReactionHandler";
-import { setDefaultBotStatus } from "./Utils";
+import { randomInt, setDefaultBotStatus } from "./Utils";
 
 const AWS = require('aws-sdk');
 
@@ -17,6 +17,7 @@ export default class Bot {
     public async listen(): Promise<string> {
 
         this.client.on('message', async (message:Message) => await CommandHandler(null, this.client, message));
+        
         this.client.on('messageUpdate', async(message:Message, oldMessage: Message) => await CommandHandler(null, this.client, message, oldMessage));
 
         this.client.on('guildCreate', async(guild:Guild) => await GuildCreateHandler(null, this.client, guild));
