@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node build/index.js",
+    "start": "node dist/bin/index.js",
     "watch": "tsc -p tsconfig.json -w",
     "prebuild": "rimraf dist",
     "build": "tsc -p tsconfig.json",
@@ -21,9 +21,7 @@
     "aws-sdk": "^2.828.0",
     "axios": "^0.21.1",
     "canvacord": "^5.0.8",
-    "canvas": "^2.6.1",
     "crypto": "^1.0.1",
-    "discord-canvas": "^1.4.1",
     "discord.js": "^12.5.1",
     "dotenv": "^8.2.0",
     "html-entities": "^2.0.2",

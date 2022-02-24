@@ -1,3 +1,5 @@
+import { CaughtMonster } from "../../models/CaughtMonster";
+import { Trainer } from "../../models/Trainer";
 
 const Pokedex = require('pokedex-promise-v2');
 
@@ -50,5 +52,16 @@ export class PokemonManager {
 
     static async getPokemonInfo(name: string): Promise<IPokemonInfo> {
         return await P.getPokemonByName(name);
+    }
+
+    static async getTrainer(userId: string, guildId: string): Promise<[Trainer, boolean]> {
+        return await Trainer.findOrCreate({where: {userId, guildId}, defaults: {userId, guildId}});
+    }
+
+    static async trainerCaughtPokemon(userId: string, guildId: string, pokemonId: number, exp: number): Promise<void> {
+        let [trainer, created] = await this.getTrainer(userId, guildId);
+
+        let caughtPokemon = await CaughtMonster.create({trainerId: trainer.id, pokemonId: pokemonId, exp, dateCaught: new Date(), trainer: trainer});
+        await caughtPokemon.save();
     }
 }

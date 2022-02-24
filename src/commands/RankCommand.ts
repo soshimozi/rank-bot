@@ -1,6 +1,6 @@
 import { Client, Message, MessageAttachment, MessageEmbed } from "discord.js";
 import { ICommand } from "../interfaces/ICommand";
-import {RankCard} from 'discord-canvas';
+//import {RankCard} from 'discord-canvas';
 const canvacord = require("canvacord");
 
 export const rank: ICommand = {
@@ -21,6 +21,7 @@ export const rank: ICommand = {
         // let buffer = await rank.build();
 
         // TODO: add user stats :D
+        /*
         const image = await new RankCard()
                             //.setAvatar(message.author.avatarURL({format: "png" }))
                             //.setAvatar(message.author.displayAvatarURL({dynamic: false, format: "png" }))
@@ -46,6 +47,8 @@ export const rank: ICommand = {
         //let buffer = image.toBuffer();
 
         const attachment = new MessageAttachment(image.toBuffer(), "rankcard.png");
-        await message.channel.send(attachment);
+        */
+
+        await message.channel.send("rank card is work in progress")
     },
 };

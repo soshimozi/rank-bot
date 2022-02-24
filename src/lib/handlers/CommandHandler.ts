@@ -1,4 +1,5 @@
 import { Client, Message, TextChannel } from "discord.js";
+import { relativeTimeRounding } from "moment";
 import { ICommandHandler } from "../../interfaces/ICommandHandler";
 import { BotState } from "../BotState";
 import { CommandList } from "../CommandList";
@@ -6,7 +7,7 @@ import { BotStateManager } from "../managers/BotStateManager";
 import { LevelManager } from '../managers/LevelManager';
 import { PokemonManager } from "../managers/PokemonManager";
 import { UserStatManager } from "../managers/UserStatManager";
-import { randomInt, wrapWithMarkown } from "../Utils";
+import { giveHugs, randomInt, wrapWithMarkown } from "../Utils";
 const moment = require("moment");
 const _ = require('underscore');
 
@@ -28,27 +29,25 @@ export const CommandHandler:ICommandHandler = async (err: unknown,
     await LevelManager.giveGuildUserExp(message.guild.member(message.author.id), message);
     await UserStatManager.addUserMessage(message.author, message.guild);
 
-    await checkForRandomEncounters(client, message);
-
     // check if there are dargins in the message
     if(darginsBeHere(message)) {
         return;
     }
 
     // check if it's a hug message
-    if(giveHugs(message)) {
+    if (message.content.toLowerCase().startsWith('hug') && giveHugs(message)) { 
         return;
     }
     
-    // TODO: move prefix into settings?
-    // is it a command?
-    if(!message.content.startsWith(process.env.PREFIX)) {
-        return;
-    }
-
     // music player messgaes handled by player
     if(message.content.toLowerCase() === '!skip' || message.content.toLowerCase() === '!catch') return;
     
+    // is it a command?
+    if(!message.content.startsWith(process.env.PREFIX)) {
+        await checkForRandomEncounters(client, message);
+        return;
+    }
+
     // get rid of prefix
     const messageParts = message.content.split(" ");
     const commandName = messageParts[0].substr(1);
@@ -82,12 +81,11 @@ export const CommandHandler:ICommandHandler = async (err: unknown,
 const checkForRandomEncounters = async (client:Client, message:Message) => {
     
     let botState = BotStateManager.getBotState(message.guild.id);
-    console.log('botState:', botState);
 
     if(moment().diff(moment(botState.nextEncounter || new Date())) < 0)
         return;
 
-    let timeout = randomInt(2, 6);
+    let timeout = randomInt(10, 30);
     botState.nextEncounter = moment(botState.nextEncounter || new Date()).add(timeout, 'minutes');
 
     botState.currentPokemon = true;
@@ -105,7 +103,6 @@ const checkForRandomEncounters = async (client:Client, message:Message) => {
 
     const pokemonInfo = await PokemonManager.getPokemonInfo(pokemonListItem.name);
     
-
     let embed = {
         title: `${pokemonInfo.name.toUpperCase()}`,
         color: 0xffff66,
@@ -131,6 +128,8 @@ const checkForRandomEncounters = async (client:Client, message:Message) => {
     let userTries = {};
     const filter = async response => {
 
+        console.log(response.content);
+
         if(response.content !== '!catch') {
             return false;
         }
@@ -149,7 +148,7 @@ const checkForRandomEncounters = async (client:Client, message:Message) => {
         // for now no inventory and a flat rate of 33%
 
          let attempt = randomInt(0, 100);
-         if(attempt <= 33) {
+         if(attempt <= 100) {
              return true;
          }
 
@@ -170,41 +169,43 @@ const checkForRandomEncounters = async (client:Client, message:Message) => {
 
     if(winner !== null) {
         await randomChannel.send(`${winner} caught the ${pokemonInfo.name} for ${pokemonInfo.base_experience} points! `)
+
+        await PokemonManager.trainerCaughtPokemon(winner.id, message.guild.id, pokemonInfo.id, pokemonInfo.base_experience);
     }
 }
 
-const giveHugs = (message: Message): boolean => {
-    if (message.content.toLowerCase().startsWith('hug')) { 
+// const giveHugs = (message: Message): boolean => {
+//     if (message.content.toLowerCase().startsWith('hug')) { 
 
-        let targetId = null;
-        let isRole = false;
+//         let targetId = null;
+//         let isRole = false;
 
-        let targetMember = message.mentions.members.first();
-        if(!targetMember) { 
-            let role = message.mentions.roles.first();
+//         let targetMember = message.mentions.members.first();
+//         if(!targetMember) { 
+//             let role = message.mentions.roles.first();
 
-            if(role) {
-                targetId = role.id;
-                isRole = true;
-            }
+//             if(role) {
+//                 targetId = role.id;
+//                 isRole = true;
+//             }
 
-        }
-        else {
-            targetId = targetMember.user.id;
-        }
+//         }
+//         else {
+//             targetId = targetMember.user.id;
+//         }
 
-        if(targetId != null) {
-            // TODO: move gif into settings
-            message.channel.send(`<@${isRole ? "&" : ""}${targetId}> ${isRole ? "everyone" : "you"} get${isRole ? "s" : ""} a hug!  https://tenor.com/view/anime-cuddle-cute-gif-12668750`);
-            return true;
-        } else {
+//         if(targetId != null) {
+//             // TODO: move gif into settings
+//             message.channel.send(`<@${isRole ? "&" : ""}${targetId}> ${isRole ? "everyone" : "you"} get${isRole ? "s" : ""} a hug!  https://tenor.com/view/anime-cuddle-cute-gif-12668750`);
+//             return true;
+//         } else {
 
-            message.reply(' you need to tag a user or role in order to hug them!!');
-            return false;
-        }
-    }    
+//             message.reply(' you need to tag a user or role in order to hug them!!');
+//             return false;
+//         }
+//     }    
 
-};
+// };
 
 // TODO: move into settings
 const darginGuildId = "702988807233994775";
